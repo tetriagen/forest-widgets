@@ -1,0 +1,30 @@
+{
+  "font-family": {
+    "type": "combobox",
+    "default": "monocraft",
+    "description": "Шрифт",
+    "options": {
+      "Системный": "system",
+      "JetBrains Mono (установлен)": "mono",
+      "Tiny5 (нужна установка)": "tiny5",
+      "Press Start 2P (нужна установка)": "press",
+      "Monocraft (установлен)": "monocraft"
+    }
+  },
+  "opacity": {
+    "type": "scale",
+    "default": 55,
+    "min": 40,
+    "max": 100,
+    "step": 1,
+    "description": "Непрозрачность отдельных квадратиков, %"
+  },
+  "size-percent": {
+    "type": "scale",
+    "default": 110,
+    "min": 75,
+    "max": 160,
+    "step": 5,
+    "description": "Размер виджета, %"
+  }
+}

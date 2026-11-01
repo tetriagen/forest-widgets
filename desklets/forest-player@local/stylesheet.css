@@ -1,0 +1,426 @@
+.fw-root { width: 258px; background-color: transparent; border: none; box-shadow: none; }
+.fw-grid { spacing: 10px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.fw-row { spacing: 10px; }
+.fw-tile { width: 98px; height: 98px; padding: 12px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 9px 0 rgba(0,0,0,0.16); border-radius: 16px; spacing: 4px; }
+.fw-caption { font-size: 10px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.fw-value { font-size: 24px; font-weight: normal; color: #c0d9c8; }
+.fw-unit { font-size: 9px; color: #678572; }
+.fw-track { width: 98px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 5px; }
+.fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.fw-music { width: 230px; padding: 14px; spacing: 9px; border-radius: 24px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 12px 0 rgba(0,0,0,0.16); }
+.fw-disc-box { padding: 8px 0; }
+.fw-title { width: 230px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 12px; }
+.fw-artist { width: 230px; text-align: center; color: #87a590; font-size: 10px; }
+.fw-controls { spacing: 8px; height: 40px; }
+.fw-control { width: 32px; height: 32px; padding: 0; color: #94b39d; border-radius: 16px; }
+.fw-play { width: 38px; height: 38px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 18px; font-size: 14px; }
+.fw-control:hover, .fw-play:hover { background-color: rgba(122,168,135,0.25); }
+
+.forest-transparent { background-color: transparent; border: none; box-shadow: none; padding: 0; }
+.fw-header { spacing: 8px; }
+.fw-source { color: #91b39c; font-size: 9px; }
+.fw-gear { color: #91b39c; font-size: 15px; padding: 0 3px; }
+.fw-album { width: 230px; text-align: center; color: #617d69; font-size: 9px; }
+.fw-time { color: #789681; font-size: 9px; }
+.fw-active { color: #a9e8bb; background-color: rgba(90,145,106,0.20); }
+
+
+.fw-slider { height: 14px; min-width: 50px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; }
+
+/* Native size variants: no actor texture scaling. */
+.forest-size-75 { width: 194px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-75 .fw-grid { spacing: 8px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-75 .fw-row { spacing: 8px; }
+.forest-size-75 .fw-tile { width: 74px; height: 74px; padding: 9px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 2px 7px 0 rgba(0,0,0,0.16); border-radius: 12px; spacing: 3px; }
+.forest-size-75 .fw-caption { font-size: 8px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-75 .fw-value { font-size: 18px; font-weight: normal; color: #c0d9c8; }
+.forest-size-75 .fw-unit { font-size: 7px; color: #678572; }
+.forest-size-75 .fw-track { width: 74px; height: 2px; background-color: #1e3328; border-radius: 2px; margin-top: 4px; }
+.forest-size-75 .fw-fill { height: 2px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-75 .fw-music { width: 172px; padding: 10px; spacing: 7px; border-radius: 18px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 9px 0 rgba(0,0,0,0.16); }
+.forest-size-75 .fw-disc-box { padding: 6px 0; }
+.forest-size-75 .fw-title { width: 172px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 9px; }
+.forest-size-75 .fw-artist { width: 172px; text-align: center; color: #87a590; font-size: 8px; }
+.forest-size-75 .fw-controls { spacing: 6px; height: 30px; }
+.forest-size-75 .fw-control { width: 24px; height: 24px; padding: 0; color: #94b39d; border-radius: 12px; }
+.forest-size-75 .fw-play { width: 28px; height: 28px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 14px; font-size: 10px; }
+.forest-size-75 .fw-header { spacing: 6px; }
+.forest-size-75 .fw-source { color: #91b39c; font-size: 7px; }
+.forest-size-75 .fw-gear { color: #91b39c; font-size: 11px; padding: 0 2px; }
+.forest-size-75 .fw-album { width: 172px; text-align: center; color: #617d69; font-size: 7px; }
+.forest-size-75 .fw-time { color: #789681; font-size: 7px; }
+.forest-size-75 .fw-slider { height: 10px; min-width: 38px; color: #bed9c7; -slider-height: 2px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 3px; }
+.forest-size-80 { width: 206px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-80 .fw-grid { spacing: 8px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-80 .fw-row { spacing: 8px; }
+.forest-size-80 .fw-tile { width: 78px; height: 78px; padding: 10px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 2px 7px 0 rgba(0,0,0,0.16); border-radius: 13px; spacing: 3px; }
+.forest-size-80 .fw-caption { font-size: 8px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-80 .fw-value { font-size: 19px; font-weight: normal; color: #c0d9c8; }
+.forest-size-80 .fw-unit { font-size: 7px; color: #678572; }
+.forest-size-80 .fw-track { width: 78px; height: 2px; background-color: #1e3328; border-radius: 2px; margin-top: 4px; }
+.forest-size-80 .fw-fill { height: 2px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-80 .fw-music { width: 184px; padding: 11px; spacing: 7px; border-radius: 19px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 10px 0 rgba(0,0,0,0.16); }
+.forest-size-80 .fw-disc-box { padding: 6px 0; }
+.forest-size-80 .fw-title { width: 184px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 10px; }
+.forest-size-80 .fw-artist { width: 184px; text-align: center; color: #87a590; font-size: 8px; }
+.forest-size-80 .fw-controls { spacing: 6px; height: 32px; }
+.forest-size-80 .fw-control { width: 26px; height: 26px; padding: 0; color: #94b39d; border-radius: 13px; }
+.forest-size-80 .fw-play { width: 30px; height: 30px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 14px; font-size: 11px; }
+.forest-size-80 .fw-header { spacing: 6px; }
+.forest-size-80 .fw-source { color: #91b39c; font-size: 7px; }
+.forest-size-80 .fw-gear { color: #91b39c; font-size: 12px; padding: 0 2px; }
+.forest-size-80 .fw-album { width: 184px; text-align: center; color: #617d69; font-size: 7px; }
+.forest-size-80 .fw-time { color: #789681; font-size: 7px; }
+.forest-size-80 .fw-slider { height: 11px; min-width: 40px; color: #bed9c7; -slider-height: 2px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 3px; }
+.forest-size-85 { width: 219px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-85 .fw-grid { spacing: 8px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-85 .fw-row { spacing: 8px; }
+.forest-size-85 .fw-tile { width: 83px; height: 83px; padding: 10px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 8px 0 rgba(0,0,0,0.16); border-radius: 14px; spacing: 3px; }
+.forest-size-85 .fw-caption { font-size: 8px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-85 .fw-value { font-size: 20px; font-weight: normal; color: #c0d9c8; }
+.forest-size-85 .fw-unit { font-size: 8px; color: #678572; }
+.forest-size-85 .fw-track { width: 83px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 4px; }
+.forest-size-85 .fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-85 .fw-music { width: 196px; padding: 12px; spacing: 8px; border-radius: 20px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 10px 0 rgba(0,0,0,0.16); }
+.forest-size-85 .fw-disc-box { padding: 7px 0; }
+.forest-size-85 .fw-title { width: 196px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 10px; }
+.forest-size-85 .fw-artist { width: 196px; text-align: center; color: #87a590; font-size: 8px; }
+.forest-size-85 .fw-controls { spacing: 7px; height: 34px; }
+.forest-size-85 .fw-control { width: 27px; height: 27px; padding: 0; color: #94b39d; border-radius: 14px; }
+.forest-size-85 .fw-play { width: 32px; height: 32px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 15px; font-size: 12px; }
+.forest-size-85 .fw-header { spacing: 7px; }
+.forest-size-85 .fw-source { color: #91b39c; font-size: 8px; }
+.forest-size-85 .fw-gear { color: #91b39c; font-size: 13px; padding: 0 3px; }
+.forest-size-85 .fw-album { width: 196px; text-align: center; color: #617d69; font-size: 8px; }
+.forest-size-85 .fw-time { color: #789681; font-size: 8px; }
+.forest-size-85 .fw-slider { height: 12px; min-width: 42px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 3px; }
+.forest-size-90 { width: 232px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-90 .fw-grid { spacing: 9px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-90 .fw-row { spacing: 9px; }
+.forest-size-90 .fw-tile { width: 88px; height: 88px; padding: 11px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 8px 0 rgba(0,0,0,0.16); border-radius: 14px; spacing: 4px; }
+.forest-size-90 .fw-caption { font-size: 9px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-90 .fw-value { font-size: 22px; font-weight: normal; color: #c0d9c8; }
+.forest-size-90 .fw-unit { font-size: 8px; color: #678572; }
+.forest-size-90 .fw-track { width: 88px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 4px; }
+.forest-size-90 .fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-90 .fw-music { width: 207px; padding: 13px; spacing: 8px; border-radius: 22px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 11px 0 rgba(0,0,0,0.16); }
+.forest-size-90 .fw-disc-box { padding: 7px 0; }
+.forest-size-90 .fw-title { width: 207px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 11px; }
+.forest-size-90 .fw-artist { width: 207px; text-align: center; color: #87a590; font-size: 9px; }
+.forest-size-90 .fw-controls { spacing: 7px; height: 36px; }
+.forest-size-90 .fw-control { width: 29px; height: 29px; padding: 0; color: #94b39d; border-radius: 14px; }
+.forest-size-90 .fw-play { width: 34px; height: 34px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 16px; font-size: 13px; }
+.forest-size-90 .fw-header { spacing: 7px; }
+.forest-size-90 .fw-source { color: #91b39c; font-size: 8px; }
+.forest-size-90 .fw-gear { color: #91b39c; font-size: 14px; padding: 0 3px; }
+.forest-size-90 .fw-album { width: 207px; text-align: center; color: #617d69; font-size: 8px; }
+.forest-size-90 .fw-time { color: #789681; font-size: 8px; }
+.forest-size-90 .fw-slider { height: 13px; min-width: 45px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; }
+.forest-size-95 { width: 245px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-95 .fw-grid { spacing: 10px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-95 .fw-row { spacing: 10px; }
+.forest-size-95 .fw-tile { width: 93px; height: 93px; padding: 11px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 9px 0 rgba(0,0,0,0.16); border-radius: 15px; spacing: 4px; }
+.forest-size-95 .fw-caption { font-size: 10px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-95 .fw-value { font-size: 23px; font-weight: normal; color: #c0d9c8; }
+.forest-size-95 .fw-unit { font-size: 9px; color: #678572; }
+.forest-size-95 .fw-track { width: 93px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 5px; }
+.forest-size-95 .fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-95 .fw-music { width: 218px; padding: 13px; spacing: 9px; border-radius: 23px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 11px 0 rgba(0,0,0,0.16); }
+.forest-size-95 .fw-disc-box { padding: 8px 0; }
+.forest-size-95 .fw-title { width: 218px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 11px; }
+.forest-size-95 .fw-artist { width: 218px; text-align: center; color: #87a590; font-size: 10px; }
+.forest-size-95 .fw-controls { spacing: 8px; height: 38px; }
+.forest-size-95 .fw-control { width: 30px; height: 30px; padding: 0; color: #94b39d; border-radius: 15px; }
+.forest-size-95 .fw-play { width: 36px; height: 36px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 17px; font-size: 13px; }
+.forest-size-95 .fw-header { spacing: 8px; }
+.forest-size-95 .fw-source { color: #91b39c; font-size: 9px; }
+.forest-size-95 .fw-gear { color: #91b39c; font-size: 14px; padding: 0 3px; }
+.forest-size-95 .fw-album { width: 218px; text-align: center; color: #617d69; font-size: 9px; }
+.forest-size-95 .fw-time { color: #789681; font-size: 9px; }
+.forest-size-95 .fw-slider { height: 13px; min-width: 48px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; }
+.forest-size-100 { width: 258px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-100 .fw-grid { spacing: 10px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-100 .fw-row { spacing: 10px; }
+.forest-size-100 .fw-tile { width: 98px; height: 98px; padding: 12px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 9px 0 rgba(0,0,0,0.16); border-radius: 16px; spacing: 4px; }
+.forest-size-100 .fw-caption { font-size: 10px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-100 .fw-value { font-size: 24px; font-weight: normal; color: #c0d9c8; }
+.forest-size-100 .fw-unit { font-size: 9px; color: #678572; }
+.forest-size-100 .fw-track { width: 98px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 5px; }
+.forest-size-100 .fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-100 .fw-music { width: 230px; padding: 14px; spacing: 9px; border-radius: 24px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 12px 0 rgba(0,0,0,0.16); }
+.forest-size-100 .fw-disc-box { padding: 8px 0; }
+.forest-size-100 .fw-title { width: 230px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 12px; }
+.forest-size-100 .fw-artist { width: 230px; text-align: center; color: #87a590; font-size: 10px; }
+.forest-size-100 .fw-controls { spacing: 8px; height: 40px; }
+.forest-size-100 .fw-control { width: 32px; height: 32px; padding: 0; color: #94b39d; border-radius: 16px; }
+.forest-size-100 .fw-play { width: 38px; height: 38px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 18px; font-size: 14px; }
+.forest-size-100 .fw-header { spacing: 8px; }
+.forest-size-100 .fw-source { color: #91b39c; font-size: 9px; }
+.forest-size-100 .fw-gear { color: #91b39c; font-size: 15px; padding: 0 3px; }
+.forest-size-100 .fw-album { width: 230px; text-align: center; color: #617d69; font-size: 9px; }
+.forest-size-100 .fw-time { color: #789681; font-size: 9px; }
+.forest-size-100 .fw-slider { height: 14px; min-width: 50px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; }
+.forest-size-105 { width: 271px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-105 .fw-grid { spacing: 10px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-105 .fw-row { spacing: 10px; }
+.forest-size-105 .fw-tile { width: 103px; height: 103px; padding: 13px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 9px 0 rgba(0,0,0,0.16); border-radius: 17px; spacing: 4px; }
+.forest-size-105 .fw-caption { font-size: 10px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-105 .fw-value { font-size: 25px; font-weight: normal; color: #c0d9c8; }
+.forest-size-105 .fw-unit { font-size: 9px; color: #678572; }
+.forest-size-105 .fw-track { width: 103px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 5px; }
+.forest-size-105 .fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-105 .fw-music { width: 242px; padding: 15px; spacing: 9px; border-radius: 25px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 13px 0 rgba(0,0,0,0.16); }
+.forest-size-105 .fw-disc-box { padding: 8px 0; }
+.forest-size-105 .fw-title { width: 242px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 13px; }
+.forest-size-105 .fw-artist { width: 242px; text-align: center; color: #87a590; font-size: 10px; }
+.forest-size-105 .fw-controls { spacing: 8px; height: 42px; }
+.forest-size-105 .fw-control { width: 34px; height: 34px; padding: 0; color: #94b39d; border-radius: 17px; }
+.forest-size-105 .fw-play { width: 40px; height: 40px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 19px; font-size: 15px; }
+.forest-size-105 .fw-header { spacing: 8px; }
+.forest-size-105 .fw-source { color: #91b39c; font-size: 9px; }
+.forest-size-105 .fw-gear { color: #91b39c; font-size: 16px; padding: 0 3px; }
+.forest-size-105 .fw-album { width: 242px; text-align: center; color: #617d69; font-size: 9px; }
+.forest-size-105 .fw-time { color: #789681; font-size: 9px; }
+.forest-size-105 .fw-slider { height: 15px; min-width: 52px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; }
+.forest-size-110 { width: 284px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-110 .fw-grid { spacing: 11px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-110 .fw-row { spacing: 11px; }
+.forest-size-110 .fw-tile { width: 108px; height: 108px; padding: 13px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 10px 0 rgba(0,0,0,0.16); border-radius: 18px; spacing: 4px; }
+.forest-size-110 .fw-caption { font-size: 11px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-110 .fw-value { font-size: 26px; font-weight: normal; color: #c0d9c8; }
+.forest-size-110 .fw-unit { font-size: 10px; color: #678572; }
+.forest-size-110 .fw-track { width: 108px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 6px; }
+.forest-size-110 .fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-110 .fw-music { width: 253px; padding: 15px; spacing: 10px; border-radius: 26px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 13px 0 rgba(0,0,0,0.16); }
+.forest-size-110 .fw-disc-box { padding: 9px 0; }
+.forest-size-110 .fw-title { width: 253px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 13px; }
+.forest-size-110 .fw-artist { width: 253px; text-align: center; color: #87a590; font-size: 11px; }
+.forest-size-110 .fw-controls { spacing: 9px; height: 44px; }
+.forest-size-110 .fw-control { width: 35px; height: 35px; padding: 0; color: #94b39d; border-radius: 18px; }
+.forest-size-110 .fw-play { width: 42px; height: 42px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 20px; font-size: 15px; }
+.forest-size-110 .fw-header { spacing: 9px; }
+.forest-size-110 .fw-source { color: #91b39c; font-size: 10px; }
+.forest-size-110 .fw-gear { color: #91b39c; font-size: 16px; padding: 0 3px; }
+.forest-size-110 .fw-album { width: 253px; text-align: center; color: #617d69; font-size: 10px; }
+.forest-size-110 .fw-time { color: #789681; font-size: 10px; }
+.forest-size-110 .fw-slider { height: 15px; min-width: 55px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; }
+.forest-size-115 { width: 297px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-115 .fw-grid { spacing: 12px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-115 .fw-row { spacing: 12px; }
+.forest-size-115 .fw-tile { width: 113px; height: 113px; padding: 14px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 3px 10px 0 rgba(0,0,0,0.16); border-radius: 18px; spacing: 5px; }
+.forest-size-115 .fw-caption { font-size: 12px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-115 .fw-value { font-size: 28px; font-weight: normal; color: #c0d9c8; }
+.forest-size-115 .fw-unit { font-size: 10px; color: #678572; }
+.forest-size-115 .fw-track { width: 113px; height: 3px; background-color: #1e3328; border-radius: 2px; margin-top: 6px; }
+.forest-size-115 .fw-fill { height: 3px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-115 .fw-music { width: 264px; padding: 16px; spacing: 10px; border-radius: 28px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 5px 14px 0 rgba(0,0,0,0.16); }
+.forest-size-115 .fw-disc-box { padding: 9px 0; }
+.forest-size-115 .fw-title { width: 264px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 14px; }
+.forest-size-115 .fw-artist { width: 264px; text-align: center; color: #87a590; font-size: 12px; }
+.forest-size-115 .fw-controls { spacing: 9px; height: 46px; }
+.forest-size-115 .fw-control { width: 37px; height: 37px; padding: 0; color: #94b39d; border-radius: 18px; }
+.forest-size-115 .fw-play { width: 44px; height: 44px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 21px; font-size: 16px; }
+.forest-size-115 .fw-header { spacing: 9px; }
+.forest-size-115 .fw-source { color: #91b39c; font-size: 10px; }
+.forest-size-115 .fw-gear { color: #91b39c; font-size: 17px; padding: 0 3px; }
+.forest-size-115 .fw-album { width: 264px; text-align: center; color: #617d69; font-size: 10px; }
+.forest-size-115 .fw-time { color: #789681; font-size: 10px; }
+.forest-size-115 .fw-slider { height: 16px; min-width: 57px; color: #bed9c7; -slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 5px; }
+.forest-size-120 { width: 310px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-120 .fw-grid { spacing: 12px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-120 .fw-row { spacing: 12px; }
+.forest-size-120 .fw-tile { width: 118px; height: 118px; padding: 14px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 11px 0 rgba(0,0,0,0.16); border-radius: 19px; spacing: 5px; }
+.forest-size-120 .fw-caption { font-size: 12px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-120 .fw-value { font-size: 29px; font-weight: normal; color: #c0d9c8; }
+.forest-size-120 .fw-unit { font-size: 11px; color: #678572; }
+.forest-size-120 .fw-track { width: 118px; height: 4px; background-color: #1e3328; border-radius: 2px; margin-top: 6px; }
+.forest-size-120 .fw-fill { height: 4px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-120 .fw-music { width: 276px; padding: 17px; spacing: 11px; border-radius: 29px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 5px 14px 0 rgba(0,0,0,0.16); }
+.forest-size-120 .fw-disc-box { padding: 10px 0; }
+.forest-size-120 .fw-title { width: 276px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 14px; }
+.forest-size-120 .fw-artist { width: 276px; text-align: center; color: #87a590; font-size: 12px; }
+.forest-size-120 .fw-controls { spacing: 10px; height: 48px; }
+.forest-size-120 .fw-control { width: 38px; height: 38px; padding: 0; color: #94b39d; border-radius: 19px; }
+.forest-size-120 .fw-play { width: 46px; height: 46px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 22px; font-size: 17px; }
+.forest-size-120 .fw-header { spacing: 10px; }
+.forest-size-120 .fw-source { color: #91b39c; font-size: 11px; }
+.forest-size-120 .fw-gear { color: #91b39c; font-size: 18px; padding: 0 4px; }
+.forest-size-120 .fw-album { width: 276px; text-align: center; color: #617d69; font-size: 11px; }
+.forest-size-120 .fw-time { color: #789681; font-size: 11px; }
+.forest-size-120 .fw-slider { height: 17px; min-width: 60px; color: #bed9c7; -slider-height: 4px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 5px; }
+.forest-size-125 { width: 322px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-125 .fw-grid { spacing: 12px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-125 .fw-row { spacing: 12px; }
+.forest-size-125 .fw-tile { width: 122px; height: 122px; padding: 15px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 11px 0 rgba(0,0,0,0.16); border-radius: 20px; spacing: 5px; }
+.forest-size-125 .fw-caption { font-size: 12px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-125 .fw-value { font-size: 30px; font-weight: normal; color: #c0d9c8; }
+.forest-size-125 .fw-unit { font-size: 11px; color: #678572; }
+.forest-size-125 .fw-track { width: 122px; height: 4px; background-color: #1e3328; border-radius: 2px; margin-top: 6px; }
+.forest-size-125 .fw-fill { height: 4px; background-color: #91b99d; border-radius: 2px; }
+.forest-size-125 .fw-music { width: 288px; padding: 18px; spacing: 11px; border-radius: 30px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 5px 15px 0 rgba(0,0,0,0.16); }
+.forest-size-125 .fw-disc-box { padding: 10px 0; }
+.forest-size-125 .fw-title { width: 288px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 15px; }
+.forest-size-125 .fw-artist { width: 288px; text-align: center; color: #87a590; font-size: 12px; }
+.forest-size-125 .fw-controls { spacing: 10px; height: 50px; }
+.forest-size-125 .fw-control { width: 40px; height: 40px; padding: 0; color: #94b39d; border-radius: 20px; }
+.forest-size-125 .fw-play { width: 48px; height: 48px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 22px; font-size: 18px; }
+.forest-size-125 .fw-header { spacing: 10px; }
+.forest-size-125 .fw-source { color: #91b39c; font-size: 11px; }
+.forest-size-125 .fw-gear { color: #91b39c; font-size: 19px; padding: 0 4px; }
+.forest-size-125 .fw-album { width: 288px; text-align: center; color: #617d69; font-size: 11px; }
+.forest-size-125 .fw-time { color: #789681; font-size: 11px; }
+.forest-size-125 .fw-slider { height: 18px; min-width: 62px; color: #bed9c7; -slider-height: 4px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 5px; }
+.forest-size-130 { width: 335px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-130 .fw-grid { spacing: 13px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-130 .fw-row { spacing: 13px; }
+.forest-size-130 .fw-tile { width: 127px; height: 127px; padding: 16px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 12px 0 rgba(0,0,0,0.16); border-radius: 21px; spacing: 5px; }
+.forest-size-130 .fw-caption { font-size: 13px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-130 .fw-value { font-size: 31px; font-weight: normal; color: #c0d9c8; }
+.forest-size-130 .fw-unit { font-size: 12px; color: #678572; }
+.forest-size-130 .fw-track { width: 127px; height: 4px; background-color: #1e3328; border-radius: 3px; margin-top: 6px; }
+.forest-size-130 .fw-fill { height: 4px; background-color: #91b99d; border-radius: 3px; }
+.forest-size-130 .fw-music { width: 299px; padding: 18px; spacing: 12px; border-radius: 31px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 5px 16px 0 rgba(0,0,0,0.16); }
+.forest-size-130 .fw-disc-box { padding: 10px 0; }
+.forest-size-130 .fw-title { width: 299px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 16px; }
+.forest-size-130 .fw-artist { width: 299px; text-align: center; color: #87a590; font-size: 13px; }
+.forest-size-130 .fw-controls { spacing: 10px; height: 52px; }
+.forest-size-130 .fw-control { width: 42px; height: 42px; padding: 0; color: #94b39d; border-radius: 21px; }
+.forest-size-130 .fw-play { width: 49px; height: 49px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 23px; font-size: 18px; }
+.forest-size-130 .fw-header { spacing: 10px; }
+.forest-size-130 .fw-source { color: #91b39c; font-size: 12px; }
+.forest-size-130 .fw-gear { color: #91b39c; font-size: 20px; padding: 0 4px; }
+.forest-size-130 .fw-album { width: 299px; text-align: center; color: #617d69; font-size: 12px; }
+.forest-size-130 .fw-time { color: #789681; font-size: 12px; }
+.forest-size-130 .fw-slider { height: 18px; min-width: 65px; color: #bed9c7; -slider-height: 4px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 5px; }
+.forest-size-135 { width: 348px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-135 .fw-grid { spacing: 14px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-135 .fw-row { spacing: 14px; }
+.forest-size-135 .fw-tile { width: 132px; height: 132px; padding: 16px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 12px 0 rgba(0,0,0,0.16); border-radius: 22px; spacing: 5px; }
+.forest-size-135 .fw-caption { font-size: 14px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-135 .fw-value { font-size: 32px; font-weight: normal; color: #c0d9c8; }
+.forest-size-135 .fw-unit { font-size: 12px; color: #678572; }
+.forest-size-135 .fw-track { width: 132px; height: 4px; background-color: #1e3328; border-radius: 3px; margin-top: 7px; }
+.forest-size-135 .fw-fill { height: 4px; background-color: #91b99d; border-radius: 3px; }
+.forest-size-135 .fw-music { width: 310px; padding: 19px; spacing: 12px; border-radius: 32px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 5px 16px 0 rgba(0,0,0,0.16); }
+.forest-size-135 .fw-disc-box { padding: 11px 0; }
+.forest-size-135 .fw-title { width: 310px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 16px; }
+.forest-size-135 .fw-artist { width: 310px; text-align: center; color: #87a590; font-size: 14px; }
+.forest-size-135 .fw-controls { spacing: 11px; height: 54px; }
+.forest-size-135 .fw-control { width: 43px; height: 43px; padding: 0; color: #94b39d; border-radius: 22px; }
+.forest-size-135 .fw-play { width: 51px; height: 51px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 24px; font-size: 19px; }
+.forest-size-135 .fw-header { spacing: 11px; }
+.forest-size-135 .fw-source { color: #91b39c; font-size: 12px; }
+.forest-size-135 .fw-gear { color: #91b39c; font-size: 20px; padding: 0 4px; }
+.forest-size-135 .fw-album { width: 310px; text-align: center; color: #617d69; font-size: 12px; }
+.forest-size-135 .fw-time { color: #789681; font-size: 12px; }
+.forest-size-135 .fw-slider { height: 19px; min-width: 68px; color: #bed9c7; -slider-height: 4px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 5px; }
+.forest-size-140 { width: 361px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-140 .fw-grid { spacing: 14px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-140 .fw-row { spacing: 14px; }
+.forest-size-140 .fw-tile { width: 137px; height: 137px; padding: 17px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 13px 0 rgba(0,0,0,0.16); border-radius: 22px; spacing: 6px; }
+.forest-size-140 .fw-caption { font-size: 14px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-140 .fw-value { font-size: 34px; font-weight: normal; color: #c0d9c8; }
+.forest-size-140 .fw-unit { font-size: 13px; color: #678572; }
+.forest-size-140 .fw-track { width: 137px; height: 4px; background-color: #1e3328; border-radius: 3px; margin-top: 7px; }
+.forest-size-140 .fw-fill { height: 4px; background-color: #91b99d; border-radius: 3px; }
+.forest-size-140 .fw-music { width: 322px; padding: 20px; spacing: 13px; border-radius: 34px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 6px 17px 0 rgba(0,0,0,0.16); }
+.forest-size-140 .fw-disc-box { padding: 11px 0; }
+.forest-size-140 .fw-title { width: 322px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 17px; }
+.forest-size-140 .fw-artist { width: 322px; text-align: center; color: #87a590; font-size: 14px; }
+.forest-size-140 .fw-controls { spacing: 11px; height: 56px; }
+.forest-size-140 .fw-control { width: 45px; height: 45px; padding: 0; color: #94b39d; border-radius: 22px; }
+.forest-size-140 .fw-play { width: 53px; height: 53px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 25px; font-size: 20px; }
+.forest-size-140 .fw-header { spacing: 11px; }
+.forest-size-140 .fw-source { color: #91b39c; font-size: 13px; }
+.forest-size-140 .fw-gear { color: #91b39c; font-size: 21px; padding: 0 4px; }
+.forest-size-140 .fw-album { width: 322px; text-align: center; color: #617d69; font-size: 13px; }
+.forest-size-140 .fw-time { color: #789681; font-size: 13px; }
+.forest-size-140 .fw-slider { height: 20px; min-width: 70px; color: #bed9c7; -slider-height: 4px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 6px; }
+.forest-size-145 { width: 374px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-145 .fw-grid { spacing: 14px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-145 .fw-row { spacing: 14px; }
+.forest-size-145 .fw-tile { width: 142px; height: 142px; padding: 17px; background-color: #101d17; border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 4px 13px 0 rgba(0,0,0,0.16); border-radius: 23px; spacing: 6px; }
+.forest-size-145 .fw-caption { font-size: 14px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-145 .fw-value { font-size: 35px; font-weight: normal; color: #c0d9c8; }
+.forest-size-145 .fw-unit { font-size: 13px; color: #678572; }
+.forest-size-145 .fw-track { width: 142px; height: 4px; background-color: #1e3328; border-radius: 3px; margin-top: 7px; }
+.forest-size-145 .fw-fill { height: 4px; background-color: #91b99d; border-radius: 3px; }
+.forest-size-145 .fw-music { width: 334px; padding: 20px; spacing: 13px; border-radius: 35px; background-color: rgba(7,15,11,0.80); border: 1px solid rgba(189,228,201,0.3); box-shadow: 0 6px 17px 0 rgba(0,0,0,0.16); }
+.forest-size-145 .fw-disc-box { padding: 12px 0; }
+.forest-size-145 .fw-title { width: 334px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 17px; }
+.forest-size-145 .fw-artist { width: 334px; text-align: center; color: #87a590; font-size: 14px; }
+.forest-size-145 .fw-controls { spacing: 12px; height: 58px; }
+.forest-size-145 .fw-control { width: 46px; height: 46px; padding: 0; color: #94b39d; border-radius: 23px; }
+.forest-size-145 .fw-play { width: 55px; height: 55px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 26px; font-size: 20px; }
+.forest-size-145 .fw-header { spacing: 12px; }
+.forest-size-145 .fw-source { color: #91b39c; font-size: 13px; }
+.forest-size-145 .fw-gear { color: #91b39c; font-size: 22px; padding: 0 4px; }
+.forest-size-145 .fw-album { width: 334px; text-align: center; color: #617d69; font-size: 13px; }
+.forest-size-145 .fw-time { color: #789681; font-size: 13px; }
+.forest-size-145 .fw-slider { height: 20px; min-width: 72px; color: #bed9c7; -slider-height: 4px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 6px; }
+.forest-size-150 { width: 387px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-150 .fw-grid { spacing: 15px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-150 .fw-row { spacing: 15px; }
+.forest-size-150 .fw-tile { width: 147px; height: 147px; padding: 18px; background-color: #101d17; border: 2px solid rgba(189,228,201,0.3); box-shadow: 0 4px 14px 0 rgba(0,0,0,0.16); border-radius: 24px; spacing: 6px; }
+.forest-size-150 .fw-caption { font-size: 15px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-150 .fw-value { font-size: 36px; font-weight: normal; color: #c0d9c8; }
+.forest-size-150 .fw-unit { font-size: 14px; color: #678572; }
+.forest-size-150 .fw-track { width: 147px; height: 4px; background-color: #1e3328; border-radius: 3px; margin-top: 8px; }
+.forest-size-150 .fw-fill { height: 4px; background-color: #91b99d; border-radius: 3px; }
+.forest-size-150 .fw-music { width: 345px; padding: 21px; spacing: 14px; border-radius: 36px; background-color: rgba(7,15,11,0.80); border: 2px solid rgba(189,228,201,0.3); box-shadow: 0 6px 18px 0 rgba(0,0,0,0.16); }
+.forest-size-150 .fw-disc-box { padding: 12px 0; }
+.forest-size-150 .fw-title { width: 345px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 18px; }
+.forest-size-150 .fw-artist { width: 345px; text-align: center; color: #87a590; font-size: 15px; }
+.forest-size-150 .fw-controls { spacing: 12px; height: 60px; }
+.forest-size-150 .fw-control { width: 48px; height: 48px; padding: 0; color: #94b39d; border-radius: 24px; }
+.forest-size-150 .fw-play { width: 57px; height: 57px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 27px; font-size: 21px; }
+.forest-size-150 .fw-header { spacing: 12px; }
+.forest-size-150 .fw-source { color: #91b39c; font-size: 14px; }
+.forest-size-150 .fw-gear { color: #91b39c; font-size: 22px; padding: 0 4px; }
+.forest-size-150 .fw-album { width: 345px; text-align: center; color: #617d69; font-size: 14px; }
+.forest-size-150 .fw-time { color: #789681; font-size: 14px; }
+.forest-size-150 .fw-slider { height: 21px; min-width: 75px; color: #bed9c7; -slider-height: 4px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 6px; }
+.forest-size-155 { width: 400px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-155 .fw-grid { spacing: 16px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-155 .fw-row { spacing: 16px; }
+.forest-size-155 .fw-tile { width: 152px; height: 152px; padding: 19px; background-color: #101d17; border: 2px solid rgba(189,228,201,0.3); box-shadow: 0 5px 14px 0 rgba(0,0,0,0.16); border-radius: 25px; spacing: 6px; }
+.forest-size-155 .fw-caption { font-size: 16px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-155 .fw-value { font-size: 37px; font-weight: normal; color: #c0d9c8; }
+.forest-size-155 .fw-unit { font-size: 14px; color: #678572; }
+.forest-size-155 .fw-track { width: 152px; height: 5px; background-color: #1e3328; border-radius: 3px; margin-top: 8px; }
+.forest-size-155 .fw-fill { height: 5px; background-color: #91b99d; border-radius: 3px; }
+.forest-size-155 .fw-music { width: 356px; padding: 22px; spacing: 14px; border-radius: 37px; background-color: rgba(7,15,11,0.80); border: 2px solid rgba(189,228,201,0.3); box-shadow: 0 6px 19px 0 rgba(0,0,0,0.16); }
+.forest-size-155 .fw-disc-box { padding: 12px 0; }
+.forest-size-155 .fw-title { width: 356px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 19px; }
+.forest-size-155 .fw-artist { width: 356px; text-align: center; color: #87a590; font-size: 16px; }
+.forest-size-155 .fw-controls { spacing: 12px; height: 62px; }
+.forest-size-155 .fw-control { width: 50px; height: 50px; padding: 0; color: #94b39d; border-radius: 25px; }
+.forest-size-155 .fw-play { width: 59px; height: 59px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 28px; font-size: 22px; }
+.forest-size-155 .fw-header { spacing: 12px; }
+.forest-size-155 .fw-source { color: #91b39c; font-size: 14px; }
+.forest-size-155 .fw-gear { color: #91b39c; font-size: 23px; padding: 0 5px; }
+.forest-size-155 .fw-album { width: 356px; text-align: center; color: #617d69; font-size: 14px; }
+.forest-size-155 .fw-time { color: #789681; font-size: 14px; }
+.forest-size-155 .fw-slider { height: 22px; min-width: 78px; color: #bed9c7; -slider-height: 5px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 6px; }
+.forest-size-160 { width: 413px; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-160 .fw-grid { spacing: 16px; padding: 0; background-color: transparent; border: none; box-shadow: none; }
+.forest-size-160 .fw-row { spacing: 16px; }
+.forest-size-160 .fw-tile { width: 157px; height: 157px; padding: 19px; background-color: #101d17; border: 2px solid rgba(189,228,201,0.3); box-shadow: 0 5px 14px 0 rgba(0,0,0,0.16); border-radius: 26px; spacing: 6px; }
+.forest-size-160 .fw-caption { font-size: 16px; font-weight: normal; color: #7d9b88; letter-spacing: 0px; }
+.forest-size-160 .fw-value { font-size: 38px; font-weight: normal; color: #c0d9c8; }
+.forest-size-160 .fw-unit { font-size: 14px; color: #678572; }
+.forest-size-160 .fw-track { width: 157px; height: 5px; background-color: #1e3328; border-radius: 3px; margin-top: 8px; }
+.forest-size-160 .fw-fill { height: 5px; background-color: #91b99d; border-radius: 3px; }
+.forest-size-160 .fw-music { width: 368px; padding: 22px; spacing: 14px; border-radius: 38px; background-color: rgba(7,15,11,0.80); border: 2px solid rgba(189,228,201,0.3); box-shadow: 0 6px 19px 0 rgba(0,0,0,0.16); }
+.forest-size-160 .fw-disc-box { padding: 13px 0; }
+.forest-size-160 .fw-title { width: 368px; text-align: center; color: #d6e3d9; font-weight: bold; font-size: 19px; }
+.forest-size-160 .fw-artist { width: 368px; text-align: center; color: #87a590; font-size: 16px; }
+.forest-size-160 .fw-controls { spacing: 13px; height: 64px; }
+.forest-size-160 .fw-control { width: 51px; height: 51px; padding: 0; color: #94b39d; border-radius: 26px; }
+.forest-size-160 .fw-play { width: 61px; height: 61px; padding: 0; color: #c1deca; background-color: rgba(89,131,101,0.22); border-radius: 29px; font-size: 22px; }
+.forest-size-160 .fw-header { spacing: 13px; }
+.forest-size-160 .fw-source { color: #91b39c; font-size: 14px; }
+.forest-size-160 .fw-gear { color: #91b39c; font-size: 24px; padding: 0 5px; }
+.forest-size-160 .fw-album { width: 368px; text-align: center; color: #617d69; font-size: 14px; }
+.forest-size-160 .fw-time { color: #789681; font-size: 14px; }
+.forest-size-160 .fw-slider { height: 22px; min-width: 80px; color: #bed9c7; -slider-height: 5px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 6px; }
