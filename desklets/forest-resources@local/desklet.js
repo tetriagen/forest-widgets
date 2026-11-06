@@ -40,17 +40,28 @@ class ForestResources extends Desklet.Desklet {
             }
             grid.add_child(row);
         }
+        this.disk=new St.BoxLayout({vertical:true,style_class:'fw-tile'});
+        this.diskTitle=new St.Label({text:'DISK · /',style_class:'fw-caption'});
+        this.diskValue=new St.Label({text:'—',style_class:'fw-value'});
+        this.diskDetail=new St.Label({text:'GiB FREE',style_class:'fw-unit'});
+        this.diskTrack=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
+        this.diskFill=new St.Widget({style_class:'fw-fill',width:0,height:3});
+        this.diskTrack.set_child(this.diskFill);
+        for(const child of [this.diskTitle,this.diskValue,this.diskDetail,this.diskTrack])this.disk.add_child(child);
+        grid.add_child(this.disk);
         this.root.add_child(grid);this.card=grid;
         this.setContent(this.root);this.setHeader('Forest Resources');this.setupSettings();this.applySettings();
+        this.sampleDisk();this.diskTimer=Mainloop.timeout_add_seconds(30,()=>{this.sampleDisk();return !this.dead;});
         this.sample();this.timer=Mainloop.timeout_add_seconds(3,()=>{this.sample();return !this.dead;});
     }
     on_desklet_removed(){
-        this.dead=true;this.cancel.cancel();if(this.timer)Mainloop.source_remove(this.timer);
+        this.dead=true;if(this.diskCancel)this.diskCancel.cancel();this.cancel.cancel();if(this.diskTimer)Mainloop.source_remove(this.diskTimer);if(this.timer)Mainloop.source_remove(this.timer);
         if(this.gpuTimeout)Mainloop.source_remove(this.gpuTimeout);if(this.gpuProcess)this.gpuProcess.force_exit();
         if(this.clampTimer)Mainloop.source_remove(this.clampTimer);if(this.settings)this.settings.finalize();
     }
     setupSettings() {
         this.settings=new Settings.DeskletSettings(this,this.metadata.uuid,this.instance_id);
+        this.settings.bind('disk-path','diskPath',()=>this.sampleDisk());
         this.settings.bind('font-family','fontFamily',()=>this.applySettings());
         this.settings.bind('opacity','cardOpacity',()=>this.applySettings());
         this.settings.bind('size-percent','sizePercent',()=>this.applySettings());
@@ -91,10 +102,47 @@ class ForestResources extends Desklet.Desklet {
         this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'";');
         if(this.card)this.card.set_style('background-color: transparent; border: none; padding: 0;');
         for(const tile of this.tiles)tile.set_style(this.glassStyle());
+        // Match both columns including their padding, borders and the gap.
+        const width=2*Math.round(98*scale)+2*Math.round(12*scale)+Math.round(10*scale)+2;
+        this.diskWidth=width*(global.ui_scale||1);
+        this.disk.set_style(this.glassStyle()+'width: '+width+'px; height: auto;');
+        this.diskValue.set_style('font-size: '+Math.round(18*scale)+'px;');
+        this.diskTrack.set_style('width: '+width+'px;');
+        this.updateDiskBar();
         if(this.discBox)this.discBox.visible=!this.compact;
         if(this.album)this.album.visible=this.showAlbum;
         if(this.rotation){this.disc.remove_transition('forest-spin');this.rotation=null;}
         if(this.disc)this.updateRotation();
+    }
+    updateDiskBar() {
+        if(this.diskFill)this.diskFill.set_width(Math.round((this.diskRatio||0)*(this.diskWidth||0)));
+    }
+    sampleDisk() {
+        if(this.dead||!this.diskValue)return;
+        if(this.diskCancel)this.diskCancel.cancel();
+        const cancel=new Gio.Cancellable();this.diskCancel=cancel;
+        const path=this.diskPath||'/';
+        this.diskTitle.set_text('DISK · '+path);
+        Gio.File.new_for_path(path).query_filesystem_info_async(
+            'filesystem::size,filesystem::free',GLib.PRIORITY_DEFAULT,cancel,(file,result)=>{
+                try {
+                    const info=file.query_filesystem_info_finish(result);
+                    if(this.dead||cancel!==this.diskCancel)return;
+                    const total=info.get_attribute_uint64('filesystem::size');
+                    const free=info.get_attribute_uint64('filesystem::free');
+                    if(!info.has_attribute('filesystem::free')||!(total>0))throw new Error('Unavailable');
+                    const unit=total>=Math.pow(1024,4)?'TiB':'GiB';
+                    const divisor=Math.pow(1024,unit==='TiB'?4:3);
+                    this.diskValue.set_text((free/divisor).toFixed(1)+' '+unit+' FREE');
+                    this.diskDetail.set_text('OF '+(total/divisor).toFixed(1)+' '+unit+' TOTAL');
+                    this.diskRatio=Math.max(0,Math.min(1,1-free/total));
+                    this.updateDiskBar();
+                } catch(e) {
+                    if(this.dead||cancel!==this.diskCancel)return;
+                    this.diskValue.set_text('—');this.diskDetail.set_text('DISK UNAVAILABLE');
+                    this.diskRatio=0;this.updateDiskBar();
+                }
+            });
     }
     sample() {
         const first = read('/proc/stat').split('\n')[0].trim().split(/\s+/).slice(1).map(Number);

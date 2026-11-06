@@ -183,3 +183,11 @@ forest-widgets/
 [Monocraft](https://github.com/IdreesInc/Monocraft) распространяется под SIL Open Font License 1.1; лицензия включена в `fonts/OFL.txt`. Это не официальный шрифт Mojang.
 
 [Cinnamon](https://github.com/linuxmint/cinnamon) и [MPRIS](https://specifications.freedesktop.org/mpris/latest/) предоставляют API рабочего стола и управления музыкой. Forest Widgets не является официальным проектом Linux Mint или Spotify.
+
+### Свободное место на диске
+
+Под CPU/RAM/GPU/VRAM отображается плоская панель DISK на ширину двух колонок.
+FREE — доступное место, TOTAL — полный объём раздела в GiB/TiB; полоска показывает заполнение.
+Обновляется каждые 30 секунд без запуска внешних команд. В настройках ресурсов можно
+указать путь к папке или точке монтирования (по умолчанию `/`). При недоступном пути
+панель показывает `DISK UNAVAILABLE`. Размер, прозрачность и шрифт общие с остальными плитками.

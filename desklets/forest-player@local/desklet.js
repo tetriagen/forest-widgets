@@ -19,6 +19,28 @@ function read(path) {
     try { const [ok, bytes] = GLib.file_get_contents(path); return ok ? ByteArray.toString(bytes) : ''; }
     catch (_) { return ''; }
 }
+// A desklet is draggable too: never bubble slider presses to its DND handler.
+class PlayerSlider extends Slider.Slider {
+    _startDragging(actor,event) {
+        if(event.get_button()!==1)return Clutter.EVENT_PROPAGATE;
+        this.dragDevice=event.get_device();
+        super._startDragging(actor,event);
+        return Clutter.EVENT_STOP;
+    }
+    _endDragging(actor,event) {
+        const result=super._endDragging(actor,event);
+        this.dragDevice=null;
+        return result;
+    }
+    cancelDrag() {
+        if(!this._dragging)return;
+        this.actor.disconnect(this._releaseId);
+        this.actor.disconnect(this._motionId);
+        if(this.dragDevice)this.dragDevice.ungrab();
+        this.dragDevice=null;
+        this._dragging=false;
+    }
+}
 class ForestPlayer extends Desklet.Desklet {
     constructor(metadata,id){
         super(metadata,id);this.dead=false;this.signals=[];this.subscriptions=[];this.tips=[];
@@ -42,7 +64,7 @@ class ForestPlayer extends Desklet.Desklet {
         this.artist=new St.Label({text:'Открой Spotify или другой плеер',style_class:'fw-artist'});
         for (const label of [this.title,this.artist]) { label.clutter_text.ellipsize=Pango.EllipsizeMode.END; label.clutter_text.set_single_line_mode(true); this.music.add_child(label); }
         this.album=new St.Label({text:'',style_class:'fw-album'});this.album.clutter_text.ellipsize=Pango.EllipsizeMode.END;this.music.add_child(this.album);
-        this.progress=new Slider.Slider(0);this.progress.actor.add_style_class_name('fw-slider');
+        this.progress=new PlayerSlider(0);this.progress.actor.add_style_class_name('fw-slider');
         this.progress.connect('drag-end',()=>this.seekFraction(this.progress._value));
         this.music.add_child(this.progress.actor);
         const times=new St.BoxLayout();this.elapsed=new St.Label({text:'0:00',style_class:'fw-time',x_expand:true});this.durationLabel=new St.Label({text:'0:00',style_class:'fw-time'});
@@ -193,7 +215,7 @@ class ForestPlayer extends Desklet.Desklet {
     noPlayer() {
         this.player=null; this.playing=false; this.title.set_text('Тишина в лесу');
         this.artist.set_text('Открой музыкальный плеер'); this.icon(this.playButton,'media-playback-start-symbolic');
-        this.length=0;this.position=0;this.trackId=null;this.progress.actor.reactive=false;this.updateProgress();
+        this.progress.cancelDrag();this.length=0;this.position=0;this.trackId=null;this.progress.actor.reactive=false;this.updateProgress();
         this.updateRotation(); this.loadArt('');
     }
     updateRotation() {
@@ -270,7 +292,9 @@ class ForestPlayer extends Desklet.Desklet {
         this.icon(this.repeatButton,this.loop==='Track'?'media-playlist-repeat-song-symbolic':'media-playlist-repeat-symbolic');
         const controllable=unpack(props.CanControl)!==false;
         for(const [button,enabled]of [[this.previousButton,controllable&&unpack(props.CanGoPrevious)!==false],[this.nextButton,controllable&&unpack(props.CanGoNext)!==false],[this.shuffleButton,controllable&&props.Shuffle!==undefined],[this.repeatButton,controllable&&props.LoopStatus!==undefined]]){button.reactive=enabled;button.opacity=enabled?255:90;}
-        this.canSeek=Boolean(unpack(props.CanSeek));this.progress.actor.reactive=this.canSeek&&this.length>0;
+        this.canSeek=Boolean(unpack(props.CanSeek));
+        if(!this.canSeek||!this.length)this.progress.cancelDrag();
+        this.progress.actor.reactive=this.canSeek&&this.length>0;
         this.source.set_label(this.player.replace('org.mpris.MediaPlayer2.','').split('.')[0].toUpperCase()+' ↗');
         const position=(this.seekingUntil||0)>GLib.get_monotonic_time()?undefined:unpack(props.Position);
         if(previousTrack!==this.trackId||previousPlayer!==this.player){this.seekingUntil=0;this.seekEpoch=(this.seekEpoch||0)+1;}
@@ -327,7 +351,7 @@ class ForestPlayer extends Desklet.Desklet {
     }
     raisePlayer(){if(this.player)this.call(this.player,'org.mpris.MediaPlayer2','Raise',null,()=>{});}
     on_desklet_removed(){
-        this.dead=true;this.cancel.cancel();if(this.artCancel)this.artCancel.cancel();this.http.abort();
+        this.dead=true;this.progress.cancelDrag();this.cancel.cancel();if(this.artCancel)this.artCancel.cancel();this.http.abort();
         if(this.positionTimer)Mainloop.source_remove(this.positionTimer);if(this.seekTimer)Mainloop.source_remove(this.seekTimer);if(this.visibilityTimer)Mainloop.source_remove(this.visibilityTimer);
         this.disc.remove_all_transitions();for(const [obj,id]of this.signals)obj.disconnect(id);
         for(const id of this.subscriptions)this.bus.signal_unsubscribe(id);if(this.clampTimer)Mainloop.source_remove(this.clampTimer);this.musicTip.destroy();for(const tip of this.tips)tip.destroy();this.settings.finalize();
