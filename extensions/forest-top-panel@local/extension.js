@@ -1,8 +1,20 @@
 const Main=imports.ui.main;
 const Mainloop=imports.mainloop;
 let styled=[],signals=[],idle=0;
-let clocks=[],watched=[];
+let clocks=[],watched=[],keyboardLabels=[];
 function styleClocks(actor){
+    if(actor._applet && actor._applet._uuid === "keyboard@cinnamon.org"){
+        const box=actor._applet._panel_icon_box;
+        if(box){
+            const label=box.get_child();
+            if(label && label.get_text){
+                if(!keyboardLabels.some(item=>item.actor===label)){keyboardLabels.push({actor:label,style:label.get_style(),text:label.get_text()});label.connect("destroy",()=>{keyboardLabels=keyboardLabels.filter(item=>item.actor!==label);});}
+                label.set_style('font-family: Manrope; font-size: 14px; font-weight: bold; letter-spacing: 0; color: #eeeeee; min-width: 28px; text-align: center;');
+                const name=label.get_text().toUpperCase();label.set_text(name==='US'?'EN':name);
+            }
+            if(!watched.includes(box)){watched.push(box);signals.push([box,box.connect('actor-added',schedule)]);}
+        }
+    }
     if(actor._applet && actor._applet._uuid === "calendar@cinnamon.org"){
         actor.add_style_class_name("forest-desktop-clock");
         if(!clocks.includes(actor))clocks.push(actor);
@@ -35,5 +47,6 @@ function disable(){
     for(const actor of styled)try{actor.remove_style_class_name('forest-top-panel');}catch(_){}
     styled=[];
     for(const actor of clocks)try{actor.remove_style_class_name("forest-desktop-clock");}catch(_){}
-    clocks=[];watched=[];
+    for(const item of keyboardLabels)try{item.actor.set_style(item.style);item.actor.set_text(item.text);}catch(_){}
+    keyboardLabels=[];clocks=[];watched=[];
 }
