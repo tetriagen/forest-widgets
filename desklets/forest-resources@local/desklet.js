@@ -121,7 +121,7 @@ class ForestResources extends Desklet.Desklet {
         this.resizeContent(scale);
         if(this.clampTimer)Mainloop.source_remove(this.clampTimer);
         this.clampTimer=Mainloop.timeout_add(100,()=>{this.clampTimer=0;this.clampPosition();if(this.tileGlass)this.tileGlass.sync();return false;});
-        const families={'doto':'Doto','manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
+        const families={'ndot':'Ndot','doto':'Doto','manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
         this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'"; border-radius: 24px;');
         if(this.card)this.card.set_style('background-color: transparent; border: none; padding: 0;');
         if(this.tileGlass)this.tileGlass.setEnabled(!!this.glassPanels);

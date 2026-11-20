@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 import os
 from pathlib import Path
+import time
 import shutil
 import subprocess
 import sys
@@ -83,6 +84,7 @@ def main():
         for uuid in UUIDS:
             if any(x.startswith(uuid + ':') for x in active):
                 reload_widget(uuid)
+            time.sleep(1)
         print('Saved widget files and positions restored. Unrelated desklets were preserved.')
         return
 
@@ -110,12 +112,13 @@ def main():
     monitor = display.get_primary_monitor() or display.get_monitor(0)
     geometry = monitor.get_geometry()
     positions = ((geometry.x + max(16, geometry.width - 320), geometry.y + 60),
-                 (geometry.x + max(0, geometry.width - 380), geometry.y + max(48, geometry.height - 428)))
+                 (geometry.x + int(geometry.width * 0.474), geometry.y + 78))
     next_id = settings.get_int('next-desklet-id')
     definitions = existing[:]
     for uuid, (x, y) in zip(UUIDS, positions):
         if any(entry.startswith(uuid + ':') for entry in existing):
             reload_widget(uuid)
+            time.sleep(1)
         else:
             definitions.append(f'{uuid}:{next_id}:{x}:{y}')
             next_id += 1

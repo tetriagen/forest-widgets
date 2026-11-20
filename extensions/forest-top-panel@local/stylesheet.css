@@ -1,0 +1,17 @@
+.forest-top-panel { font-family: "Ndot"; font-size: 14px; font-weight: bold; color: #eeeeee; }
+.forest-top-panel .applet-box { padding-left: 5px; padding-right: 5px; color: #b8b8b8; border-radius: 5px; }
+.forest-top-panel .applet-box:hover { background-color: rgba(239,43,51,0.10); }
+.forest-top-panel .applet-label { color: #eeeeee; font-size: 14px; font-weight: bold; }
+.forest-top-panel .system-status-icon { color: #b8b8b8; }
+.forest-top-panel .grouped-window-list-item-box { border-radius: 4px; padding-left: 4px; padding-right: 4px; }
+.forest-top-panel .grouped-window-list-item-box:active,
+.forest-top-panel .grouped-window-list-item-box:focus { background-color: rgba(239,43,51,0.14); border-color: rgba(239,43,51,0.60); }
+.forest-top-panel .forest-dot-button { padding: 7px 4px; }
+.forest-top-panel .forest-dot { width: 5px; height: 5px; border-radius: 3px; background-color: rgba(190,190,190,0.35); }
+.forest-top-panel .forest-dot-active { width: 13px; background-color: #ef2b33; }
+
+/* Monocraft only for the clock, not other panel labels or menus. */
+.forest-top-panel .forest-desktop-clock .applet-label { font-family: "Ndot"; font-size: 16px; font-weight: bold; }
+
+#panel.forest-top-panel { background-color: #111216; background-image: none; border-bottom: 1px solid #33353a; box-shadow: none; }
+.forest-memory { color: #eeeeee; font-size: 14px; padding: 0 10px; }

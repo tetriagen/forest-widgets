@@ -53,12 +53,14 @@ def main():
     for uuid in widget_ids:
         data[uuid]['font-family']['value'] = 'doto'
     data[widget_ids[1]]['glass-panels']['value'] = False
+    data[widget_ids[1]]['size-percent']['value'] = 100
     player = data[widget_ids[0]]
-    for key, value in {'appearance': 'radial', 'dock-side': 'right', 'show-album': False, 'compact': False, 'size-percent': 100}.items():
+    for key, value in {'appearance': 'matrix', 'dock-side': 'right', 'show-album': False, 'compact': False, 'size-percent': 100}.items():
         player[key]['value'] = value
     for uuid in widget_ids:
         save(uuid)
         reload(uuid, 'DESKLET')
+        time.sleep(1)
     time.sleep(0.3)
     # Reloading a desklet can reset its per-instance extension entry. Configure glass last.
     blur = json.loads(paths[blur_uuid].read_text())
@@ -88,8 +90,8 @@ def main():
     display = Gdk.Display.get_default()
     monitor = display.get_primary_monitor() or display.get_monitor(0)
     geom = monitor.get_geometry()
-    positions = {'forest-player@local': (geom.x + geom.width - 380, geom.y + max(48, geom.height - 428)),
-                 'forest-resources@local': (geom.x + 32, geom.y + max(48, geom.height - 470))}
+    positions = {'forest-player@local': (geom.x + int(geom.width*0.474), geom.y + 78),
+                 'forest-resources@local': (geom.x + 28, geom.y + max(48, geom.height - 460))}
     adjusted = []
     for definition in active:
         uuid, instance, *_ = definition.split(':')
@@ -106,7 +108,7 @@ def main():
         background.set_string('picture-uri', target.as_uri())
         background.set_string('picture-options', 'zoom')
     Gio.Settings.sync()
-    print('Applied: right-edge monochrome player and dot resource indicators with red accents.')
+    print('Applied: Glyph Matrix player and dot resource indicators with red accents.')
     print('Settings backup: ' + str(backup))
 
 

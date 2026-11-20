@@ -95,13 +95,13 @@ class ForestPlayer extends Desklet.Desklet {
         this.music.add_child(this.details);
         this.root.add_child(this.music);
         for(const [button,text]of [[this.shuffleButton,'Случайный порядок'],[this.repeatButton,'Повтор: выключен / плейлист / трек'],[this.playButton,'Пауза / продолжить'],[this.previousButton,'Предыдущий трек'],[this.nextButton,'Следующий трек'],[this.source,'Открыть плеер'],[gear,'Настройки виджета']])this.tips.push(new Tooltips.Tooltip(button,text));
-        const sliderStyle='-slider-height: 3px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; color: #bed9c7;';
+        const sliderStyle='-slider-height: 3px; -slider-background-color: #c7c9ce; -slider-active-background-color: #c7c9ce; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 4px; color: #c7c9ce;';
         this.progress.actor.set_style(sliderStyle);
         this.progress.connect('value-changed',()=>{if(!this.progress._dragging)this.seekFraction(this.progress._value);else this.updateProgress();});
         this.musicTip=new Tooltips.Tooltip(this.title,'');
         this.orbit=new St.Widget({layout_manager:new Clutter.FixedLayout(),style_class:'fw-orbit'});
         this.orbitActors=[this.discBox,this.source,this.gear,this.title,this.artist,this.album,this.elapsed,this.durationLabel,
-            this.shuffleButton,this.previousButton,this.playButton,this.nextButton,this.repeatButton];
+            this.shuffleButton,this.previousButton,this.playButton,this.nextButton,this.repeatButton,this.progress.actor];
         this.homeActors=this.orbitActors.map(actor=>({actor,parent:actor.get_parent(),index:actor.get_parent().get_children().indexOf(actor)}));
         this.music.add_child(this.orbit);this.orbit.hide();
         this.setContent(this.root);this.setHeader('Forest Player');this.setupSettings();
@@ -151,6 +151,7 @@ class ForestPlayer extends Desklet.Desklet {
     }
     resizeContent(scale){
         const pixels=Math.round((this.appearance==='radial'?340:190)*scale*(global.ui_scale||1));
+        this.disc.opacity=this.appearance==='matrix'?255:225;
         this.disc.set_size(pixels,pixels);this.canvas.set_size(pixels,pixels);this.canvas.invalidate();
         const dock=this.appearance==='radial';
         this.discBox.set_size(dock?Math.round(pixels/2):pixels,pixels);
@@ -158,11 +159,11 @@ class ForestPlayer extends Desklet.Desklet {
         const walk=actor=>{if(actor instanceof St.Icon)actor.icon_size=Math.round(16*scale);for(const child of actor.get_children())walk(child);};
         walk(this.root);
         const px=n=>Math.max(1,Math.round(n*scale));
-        this.progress.actor.set_style('-slider-height: '+px(3)+'px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: '+px(4)+'px; color: #bed9c7;');
+        this.progress.actor.set_style('-slider-height: '+px(3)+'px; -slider-background-color: #c7c9ce; -slider-active-background-color: #c7c9ce; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: '+px(4)+'px; color: #c7c9ce;');
     }
     glassStyle(){
         const a=(this.cardOpacity||55)/100;
-        if(this.appearance==='radial')return 'background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
+        if(['radial','matrix'].includes(this.appearance))return 'background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
         return 'background-color: rgba(13,34,22,'+a+'); background-gradient-direction: vertical; background-gradient-start: rgba(66,96,76,'+(a*0.8)+'); background-gradient-end: rgba(7,23,14,'+a+'); border-color: rgba(189,228,201,0.3);';
     }
     scheduleClamp(){
@@ -186,8 +187,9 @@ class ForestPlayer extends Desklet.Desklet {
         const percent=Math.max(75,Math.min(160,Math.round((this.sizePercent||100)/5)*5));
         const scale=percent/100;this.actor.set_scale(1,1);
         this.music.vertical=this.appearance!=='radial';
-        if(this.appearance==='radial')this.root.add_style_class_name('fw-radial');
+        if(['radial','matrix'].includes(this.appearance))this.root.add_style_class_name('fw-radial');
         else this.root.remove_style_class_name('fw-radial');
+        if(this.appearance==='matrix')this.root.add_style_class_name('fw-matrix');else this.root.remove_style_class_name('fw-matrix');
         if(this.sizeClass)this.root.remove_style_class_name(this.sizeClass);
         this.sizeClass='forest-size-'+percent;this.root.add_style_class_name(this.sizeClass);
 
@@ -195,13 +197,13 @@ class ForestPlayer extends Desklet.Desklet {
         this.progress.actor.visible=this.appearance!=='radial'||this.compact;
         this.resizeContent(scale);
         this.scheduleClamp();
-        const families={'doto':'Doto','manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
+        const families={'ndot':'Ndot','doto':'Doto','manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
         this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'";');
         if(this.card)this.card.set_style(this.glassStyle());
         if(this.discBox)this.discBox.visible=!this.compact;
         if(this.album)this.album.visible=this.showAlbum;
         if(this.rotation){this.disc.remove_transition('forest-spin');this.rotation=null;}
-        if(this.appearance==='radial'){
+        if(['radial','matrix'].includes(this.appearance)){
             const px=n=>Math.max(1,Math.round(n*scale));
             this.progress.actor.set_style('-slider-height: '+px(2)+'px; -slider-background-color: rgba(255,255,255,0.15); -slider-active-background-color: #e6e8ed; -slider-border-width: 0px; -slider-handle-radius: '+px(3)+'px; color: #f4f5f7;');
         }
@@ -209,6 +211,25 @@ class ForestPlayer extends Desklet.Desklet {
         if(this.disc){this.disc.rotation_angle_z=0;this.updateRotation();}
     }
     layoutOrbit(scale){
+        if(this.appearance==='matrix'&&!this.compact){
+            for(const actor of this.orbitActors){if(actor.get_parent()!==this.orbit){actor.get_parent().remove_child(actor);this.orbit.add_child(actor);}actor.rotation_angle_z=0;actor.set_style(null);}
+            this.details.hide();this.orbit.show();this.music.vertical=true;
+            const unit=scale*(global.ui_scale||1);
+            this.orbit.set_size(520*unit,210*unit);
+            this.root.set_style(this.root.get_style()+'width: '+520*scale+'px;');
+            this.music.set_style(this.glassStyle()+'width: '+520*scale+'px; padding: 0; spacing: 0;');
+            const place=(a,x,y,w,h)=>{a.set_position(x*unit,y*unit);a.set_size(w*unit,h*unit);};
+            place(this.discBox,5,10,190,190);this.disc.set_position(0,0);
+            place(this.source,226,14,245,20);place(this.gear,488,12,24,24);
+            place(this.title,226,45,285,34);place(this.artist,226,86,285,25);
+            this.title.set_style('width: '+285*scale+'px; font-size: '+22*scale+'px; text-align: left; font-weight: bold;');
+            this.artist.set_style('width: '+285*scale+'px; font-size: '+14*scale+'px; text-align: left;');
+            this.album.hide();this.elapsed.hide();this.durationLabel.hide();
+            place(this.progress.actor,226,122,276,14);this.progress.actor.show();
+            this.progress.actor.set_style('-slider-height: 2px; -slider-background-color: rgba(255,255,255,0.18); -slider-active-background-color: #ef2b33; -slider-border-width: 0px; -slider-handle-radius: 3px; color: #ef2b33;');
+            [this.shuffleButton,this.previousButton,this.playButton,this.nextButton,this.repeatButton].forEach((b,i)=>place(b,226+i*54,154,38,38));
+            return;
+        }
         const active=this.appearance==='radial'&&!this.compact;
         if(!this.orbit)return;
         if(active){
@@ -323,7 +344,7 @@ class ForestPlayer extends Desklet.Desklet {
         });
         this.covered=covered;
         this.updateAudioMonitor();
-        const run=this.appearance!=='radial' && this.spinEnabled && !this.compact && this.playing && this.actor.mapped && !covered;
+        const run=this.appearance==='vinyl' && this.spinEnabled && !this.compact && this.playing && this.actor.mapped && !covered;
         if (run && !this.rotation) {
             const transition=new Clutter.PropertyTransition({property_name:'rotation-angle-z',duration:this.spinSeconds*1000,repeat_count:-1,progress_mode:Clutter.AnimationMode.LINEAR});
             transition.set_from(0); transition.set_to(360);
@@ -340,7 +361,7 @@ class ForestPlayer extends Desklet.Desklet {
         if(this.spectrumFrameTimer)return;
         let previous=GLib.get_monotonic_time();
         this.spectrumFrameTimer=Mainloop.timeout_add(16,()=>{
-            if(this.dead||!this.actor.mapped||this.covered||this.appearance!=='radial'||this.compact||!this.spectrumEnabled){
+            if(this.dead||!this.actor.mapped||this.covered||!['radial','matrix'].includes(this.appearance)||this.compact||!this.spectrumEnabled){
                 this.spectrumLevels.fill(0);this.spectrumFrameTimer=0;this.canvas.invalidate();return false;
             }
             const now=GLib.get_monotonic_time(),blend=1-Math.exp(-(now-previous)/40000);previous=now;
@@ -358,7 +379,7 @@ class ForestPlayer extends Desklet.Desklet {
     }
     updateAudioMonitor() {
         if(!this.monitor)return;
-        const visible=!this.dead && this.appearance==='radial' && this.spectrumEnabled && !this.compact && this.actor.mapped && !this.covered;
+        const visible=!this.dead && ['radial','matrix'].includes(this.appearance) && this.spectrumEnabled && !this.compact && this.actor.mapped && !this.covered;
         if(visible && this.playing)this.monitor.start();
         else if(this.monitor.proc || (!visible && this.monitor.fadeTimer))this.monitor.stop(visible && !this.playing);
     }
@@ -414,6 +435,24 @@ class ForestPlayer extends Desklet.Desklet {
             }
         } catch(_){}
     }
+    drawMatrix(cr,w,h){
+        cr.setOperator(Cairo.Operator.CLEAR);cr.paint();cr.setOperator(Cairo.Operator.OVER);cr.scale(w/190,h/190);
+        cr.setSourceRGBA(0.035,0.039,0.045,1);cr.arc(95,95,92,0,Math.PI*2);cr.fill();
+        cr.setSourceRGBA(0.7,0.72,0.75,0.4);cr.setLineWidth(1.5);cr.arc(95,95,92,0,Math.PI*2);cr.stroke();
+        const levels=this.spectrumLevels||[];
+        for(let col=-12;col<=12;col++){
+            const distance=Math.abs(col)/12;
+            const band=Math.round(distance*47);
+            const level=levels[band]||0;
+            const height=Math.min(72,level*84)*Math.pow(Math.cos(distance*Math.PI/2),1.6);
+            for(let row=-12;row<=12;row++){
+                const x=col*6,y=row*6;if(x*x+y*y>78*78)continue;
+                const lit=Math.abs(y)<=height;
+                cr.setSourceRGBA(1,1,1,lit?0.96:0.085);cr.arc(95+x,95+y,lit?1.8:1.25,0,Math.PI*2);cr.fill();
+            }
+        }
+        return true;
+    }
     drawRadial(cr,w,h) {
         cr.setOperator(Cairo.Operator.CLEAR);cr.paint();cr.setOperator(Cairo.Operator.OVER);
         cr.scale(w/340,h/340);
@@ -463,6 +502,7 @@ class ForestPlayer extends Desklet.Desklet {
         cr.$dispose();return true;
     }
     drawRecord(cr,w,h) {
+        if(this.appearance==='matrix')return this.drawMatrix(cr,w,h);
         if(this.appearance==='radial')return this.drawRadial(cr,w,h);
         cr.scale(w/190,h/190);w=190;h=190;
         const r=w/2;

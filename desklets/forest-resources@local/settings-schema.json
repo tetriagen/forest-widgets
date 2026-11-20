@@ -1,43 +1,44 @@
 {
-  "font-family": {
-    "type": "combobox",
-    "default": "doto",
-    "description": "Шрифт",
-    "options": {
-      "Системный": "system",
-      "JetBrains Mono (установлен)": "mono",
-      "Tiny5 (нужна установка)": "tiny5",
-      "Press Start 2P (нужна установка)": "press",
-      "Monocraft (установлен)": "monocraft",
-      "Manrope (установлен)": "manrope",
-      "Doto — точечный": "doto"
+    "font-family": {
+        "type": "combobox",
+        "default": "doto",
+        "description": "Шрифт",
+        "options": {
+            "Системный": "system",
+            "JetBrains Mono (установлен)": "mono",
+            "Tiny5 (нужна установка)": "tiny5",
+            "Press Start 2P (нужна установка)": "press",
+            "Monocraft (установлен)": "monocraft",
+            "Manrope (установлен)": "manrope",
+            "Doto — точечный": "doto",
+            "Nothing Ndot (installed locally)": "ndot"
+        }
+    },
+    "opacity": {
+        "type": "scale",
+        "default": 55,
+        "min": 40,
+        "max": 100,
+        "step": 1,
+        "description": "Непрозрачность стеклянных подложек, %"
+    },
+    "size-percent": {
+        "type": "scale",
+        "default": 110,
+        "min": 75,
+        "max": 160,
+        "step": 5,
+        "description": "Размер виджета, %"
+    },
+    "disk-path": {
+        "type": "entry",
+        "default": "/",
+        "description": "Диск: путь к папке или точке монтирования",
+        "tooltip": "Например / или /home. Показывает свободное место на разделе с этой папкой."
+    },
+    "glass-panels": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Стеклянные подложки за показателями"
     }
-  },
-  "opacity": {
-    "type": "scale",
-    "default": 55,
-    "min": 40,
-    "max": 100,
-    "step": 1,
-    "description": "Непрозрачность стеклянных подложек, %"
-  },
-  "size-percent": {
-    "type": "scale",
-    "default": 110,
-    "min": 75,
-    "max": 160,
-    "step": 5,
-    "description": "Размер виджета, %"
-  },
-  "disk-path": {
-    "type": "entry",
-    "default": "/",
-    "description": "Диск: путь к папке или точке монтирования",
-    "tooltip": "Например / или /home. Показывает свободное место на разделе с этой папкой."
-  },
-  "glass-panels": {
-    "type": "checkbox",
-    "default": false,
-    "description": "Стеклянные подложки за показателями"
-  }
 }
