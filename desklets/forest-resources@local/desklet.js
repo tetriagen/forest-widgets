@@ -64,6 +64,7 @@ class ForestResources extends Desklet.Desklet {
         this.settings=new Settings.DeskletSettings(this,this.metadata.uuid,this.instance_id);
         this.settings.bind('disk-path','diskPath',()=>this.sampleDisk());
         this.settings.bind('font-family','fontFamily',()=>this.applySettings());
+        this.settings.bind('glass-panels','glassPanels',()=>this.applySettings());
         this.settings.bind('opacity','cardOpacity',()=>this.applySettings());
         this.settings.bind('size-percent','sizePercent',()=>this.applySettings());
     }
@@ -78,8 +79,9 @@ class ForestResources extends Desklet.Desklet {
         this.renderScale=scale;
     }
     glassStyle(){
+        if(!this.glassPanels)return 'background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
         const a=(this.cardOpacity||55)/100;
-        return 'background-color: rgba(29,31,35,'+(a*0.30)+'); background-gradient-direction: vertical; background-gradient-start: rgba(190,196,207,'+(a*0.12)+'); background-gradient-end: rgba(22,24,29,'+(a*0.22)+'); border-color: rgba(255,255,255,0.18);';
+        return 'background-color: rgba(29,31,35,'+(a*0.30)+'); background-gradient-direction: vertical; background-gradient-start: rgba(190,196,207,'+(a*0.12)+'); background-gradient-end: rgba(22,24,29,'+(a*0.22)+'); border: none; box-shadow: none;';
     }
     clampPosition(){
         if(this.dead||!this.actor.mapped)return;
@@ -102,6 +104,7 @@ class ForestResources extends Desklet.Desklet {
         const families={'manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
         this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'"; border-radius: 24px;');
         if(this.card)this.card.set_style('background-color: transparent; border: none; padding: 0;');
+        if(this.tileGlass)this.tileGlass.setEnabled(!!this.glassPanels);
         for(const tile of this.tiles)tile.set_style(this.glassStyle());
         // Match both columns including their padding, borders and the gap.
         const width=2*Math.round(98*scale)+2*Math.round(12*scale)+Math.round(10*scale)+2;

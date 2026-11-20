@@ -228,15 +228,17 @@ class ForestPlayer extends Desklet.Desklet {
             };
             // Circle centre is exactly on the screen edge. Text rows have independent radial angles.
             place(this.discBox,210,20,170,340);
-            const label=(actor,angle,radius,width,height,font,weight)=>{
+            const label=(actor,angle,radius,width,height,font,weight,tilt)=>{
                 const a=angle*Math.PI/180;
                 const x=cx+Math.cos(a)*radius-width,y=cy+Math.sin(a)*radius-height/2;
-                place(actor,x,y,width,height,angle+180);
+                place(actor,x,y,width,height,tilt);
+                // Keep the text edge anchored to its own point on the circle.
+                actor.set_pivot_point(right?1:0,0.5);
                 actor.set_style('width: '+width*scale+'px; font-size: '+font*scale+'px; font-weight: '+weight+'; text-align: '+(right?'right':'left')+';');
             };
-            label(this.title,-145,158,220,30,17,'bold');
-            label(this.artist,-163,164,185,24,12,'normal');
-            label(this.album,-179,166,180,20,10,'normal');
+            label(this.title,-145,158,220,30,17,'bold',12);
+            label(this.artist,-163,164,185,24,12,'normal',6);
+            label(this.album,-179,166,180,20,10,'normal',0);
             this.album.visible=this.showAlbum;
             place(this.source,238,22,105,22,-32);place(this.gear,333,64,24,24,-22);
             const buttons=[this.shuffleButton,this.previousButton,this.playButton,this.nextButton,this.repeatButton];
@@ -245,7 +247,7 @@ class ForestPlayer extends Desklet.Desklet {
                 const a=angles[i]*Math.PI/180,sz=i===2?42:32;
                 place(button,cx+Math.cos(a)*176-sz/2,cy+Math.sin(a)*176-sz/2,sz,sz,angles[i]-180);
             });
-            place(this.elapsed,316,278,34,18,-40);place(this.durationLabel,339,297,34,18,-60);
+            this.elapsed.hide();this.durationLabel.hide();
         }else{
             this.music.set_style(this.glassStyle());
             for(const home of this.homeActors){
@@ -254,7 +256,7 @@ class ForestPlayer extends Desklet.Desklet {
                 actor.rotation_angle_z=0;actor.set_position(0,0);
                 if(actor!==this.discBox){actor.set_size(-1,-1);actor.set_style(null);}
             }
-            this.orbit.hide();this.details.show();this.resizeContent(scale);
+            this.orbit.hide();this.details.show();this.elapsed.show();this.durationLabel.show();this.resizeContent(scale);
         }
     }
     call(name, iface, method, args, done) {
@@ -334,9 +336,9 @@ class ForestPlayer extends Desklet.Desklet {
     }
     updateAudioMonitor() {
         if(!this.monitor)return;
-        if(!this.dead && this.appearance==='radial' && this.spectrumEnabled && !this.compact && this.playing && this.actor.mapped && !this.covered)
-            this.monitor.start();
-        else if(this.monitor.proc)this.monitor.stop();
+        const visible=!this.dead && this.appearance==='radial' && this.spectrumEnabled && !this.compact && this.actor.mapped && !this.covered;
+        if(visible && this.playing)this.monitor.start();
+        else if(this.monitor.proc || (!visible && this.monitor.fadeTimer))this.monitor.stop(visible && !this.playing);
     }
     arcPoint(event){
         const [sx,sy]=event.get_coords();
@@ -404,12 +406,13 @@ class ForestPlayer extends Desklet.Desklet {
         cr.setLineWidth(2);cr.setLineCap(Cairo.LineCap.ROUND);
         for(let i=0;i<96;i++){
             const band=i<48?i:95-i,level=levels[band]||0;
+            if(level<=0.001)continue;
             const angle=i/96*Math.PI*2-Math.PI/2;
-            const inner=r+17,outer=inner+3+level*42;
-            cr.setLineWidth(5);cr.setSourceRGBA(0.9,0.94,1,0.08+level*0.12);
+            const inner=r+17,outer=inner+level*45,alpha=Math.min(1,level*10);
+            cr.setLineWidth(5);cr.setSourceRGBA(0.9,0.94,1,alpha*(0.08+level*0.12));
             cr.moveTo(c+Math.cos(angle)*inner,c+Math.sin(angle)*inner);
             cr.lineTo(c+Math.cos(angle)*outer,c+Math.sin(angle)*outer);cr.stroke();
-            cr.setLineWidth(1.8);cr.setSourceRGBA(0.96,0.97,1,0.68+level*0.32);
+            cr.setLineWidth(1.8);cr.setSourceRGBA(0.96,0.97,1,alpha*(0.68+level*0.32));
             cr.moveTo(c+Math.cos(angle)*inner,c+Math.sin(angle)*inner);
             cr.lineTo(c+Math.cos(angle)*outer,c+Math.sin(angle)*outer);cr.stroke();
         }

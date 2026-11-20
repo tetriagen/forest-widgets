@@ -20,7 +20,7 @@ class TileGlass {
     wrap(tile) {
         if(!this.Refraction)return tile;
         const wrapper=new St.Widget({layout_manager:new Clutter.BinLayout()});
-        const viewport=new Clutter.Actor({width:1,height:1,clip_to_allocation:true,reactive:false});
+        const viewport=new Clutter.Actor({width:1,height:1,clip_to_allocation:true,reactive:false,visible:false});
         const wallpaper=new Clutter.Clone({source:this.background,reactive:false});
         viewport.add_child(wallpaper);
         const effect=new this.Refraction({strength:0.48,blur_radius:4,edge_size:18,corner_radius:16,
@@ -31,7 +31,13 @@ class TileGlass {
         item.id=tile.connect('notify::allocation',()=>this.syncItem(item));
         this.items.push(item);return wrapper;
     }
+    setEnabled(enabled){
+        this.enabled=enabled;
+        for(const item of this.items)item.viewport.visible=enabled;
+        if(enabled)this.sync();
+    }
     syncItem(item) {
+        if(!this.enabled)return;
         const {tile,viewport,wallpaper,effect}=item;
         if(tile.width<2||tile.height<2)return;
         const [x,y]=tile.get_transformed_position();

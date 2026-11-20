@@ -67,6 +67,7 @@ class AudioMonitor {
                 '--format=s16le', '--rate=22050', '--channels=1', '--latency-msec=60',
                 '--process-time-msec=46', '--client-name=Forest Player', '--stream-name=Output visualizer'],
                 Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_SILENCE);
+            this.cancelFade();
             this.proc = proc; this.cancel = new Gio.Cancellable();
             const cancel = this.cancel, stream = proc.get_stdout_pipe();
             const buffer = new Uint8Array(2048); let used = 0;
@@ -93,11 +94,28 @@ class AudioMonitor {
             this.onStatus('Звуковой выход недоступен');
         }
     }
-    stop() {
+    cancelFade() {
+        if(this.fadeTimer){GLib.source_remove(this.fadeTimer);this.fadeTimer=0;}
+    }
+    stop(fade=false) {
+        this.cancelFade();
         const proc = this.proc; this.proc = null;
         if (this.cancel) { this.cancel.cancel(); this.cancel = null; }
         if (proc) { try { proc.force_exit(); } catch (_) {} }
-        this.analyzer.levels.fill(0); this.onLevels(this.analyzer.levels);
+        if(fade && this.analyzer.levels.some(level=>level>0)) {
+            // Stop capture immediately; animate only the last spectrum frame for 1.6 seconds.
+            const initial=Float64Array.from(this.analyzer.levels),started=GLib.get_monotonic_time();
+            this.fadeTimer=GLib.timeout_add(GLib.PRIORITY_DEFAULT,33,()=>{
+                const t=Math.min(1,(GLib.get_monotonic_time()-started)/1600000);
+                const factor=(1-t)*(1-t);
+                for(let i=0;i<initial.length;i++)this.analyzer.levels[i]=initial[i]*factor;
+                this.onLevels(this.analyzer.levels);
+                if(t>=1){this.fadeTimer=0;return GLib.SOURCE_REMOVE;}
+                return GLib.SOURCE_CONTINUE;
+            });
+        } else {
+            this.analyzer.levels.fill(0); this.onLevels(this.analyzer.levels);
+        }
     }
 }
 module.exports = {SpectrumAnalyzer, AudioMonitor};
