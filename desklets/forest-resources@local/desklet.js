@@ -130,7 +130,7 @@ class ForestResources extends Desklet.Desklet {
         const width=2*Math.round(98*scale)+2*Math.round(12*scale)+Math.round(10*scale)+2;
         this.diskWidth=width*(global.ui_scale||1);
         this.disk.set_style(this.glassStyle()+'width: '+width+'px; height: auto;');
-        this.diskValue.set_style('font-size: '+Math.round(18*scale)+'px;');
+        this.diskValue.set_style('font-size: '+Math.round(22*scale)+'px; letter-spacing: 1px;');
         this.diskTrack.set_style('width: '+width+'px;');
         this.updateDiskBar();
         if(this.discBox)this.discBox.visible=!this.compact;

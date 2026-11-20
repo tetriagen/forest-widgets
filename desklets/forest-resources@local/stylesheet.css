@@ -441,3 +441,8 @@
 .fw-root.fw-resources .fw-caption { color: #e8e8e8; font-weight: bold; }
 .fw-root.fw-resources .fw-value { color: #ffffff; font-weight: bold; }
 .fw-root.fw-resources .fw-unit { color: #a5a5a5; }
+
+/* Readable dot typography at desktop viewing distance. */
+.fw-root.fw-resources .fw-caption { font-size: 15px; letter-spacing: 1px; }
+.fw-root.fw-resources .fw-unit { font-size: 13px; letter-spacing: 1px; }
+.fw-root.fw-resources .fw-value { font-size: 30px; letter-spacing: 1px; }

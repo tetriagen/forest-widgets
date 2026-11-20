@@ -15,3 +15,6 @@
 
 #panel.forest-top-panel { background-color: #111216; background-image: none; border-bottom: 1px solid #33353a; box-shadow: none; }
 .forest-memory { color: #eeeeee; font-size: 14px; padding: 0 10px; }
+
+.forest-top-panel .applet-label { font-size: 16px; letter-spacing: 1px; font-weight: normal; }
+.forest-top-panel .forest-desktop-clock .applet-label { font-size: 18px; letter-spacing: 1px; font-weight: normal; }
