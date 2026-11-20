@@ -20,15 +20,23 @@ function read(path) {
     try { const [ok, bytes] = GLib.file_get_contents(path); return ok ? ByteArray.toString(bytes) : ''; }
     catch (_) { return ''; }
 }
-function dotBar(props){
+function dotBar(props,empty=false){
     const bar=new St.DrawingArea(props);
     bar.connect('repaint',()=>{
         const cr=bar.get_context(),[w,h]=bar.get_surface_size();
-        cr.setSourceRGBA(0.94,0.17,0.2,1);
+        if(empty)cr.setSourceRGBA(1,1,1,0.75);else cr.setSourceRGBA(0.94,0.17,0.2,1);
         for(let x=2;x<w;x+=6){cr.arc(x,h/2,Math.min(1.7,h/2),0,Math.PI*2);cr.fill();}
         cr.$dispose();
     });
     return bar;
+}
+function dotTrack(){
+    const track=new St.Widget({style_class:'fw-track',layout_manager:new Clutter.FixedLayout()});
+    const empty=dotBar({width:1,height:5},true);
+    track.add_child(empty);
+    track.connect('notify::allocation',()=>empty.set_size(track.width,track.height));
+    track.set_child=fill=>{track.add_child(fill);fill.set_position(0,0);};
+    return track;
 }
 class ForestResources extends Desklet.Desklet {
     constructor(metadata,id){
@@ -45,7 +53,7 @@ class ForestResources extends Desklet.Desklet {
                 this.values[key]=new St.Label({text:'—',style_class:'fw-value'});
                 tile.add_child(this.values[key]);
                 tile.add_child(new St.Label({text:{cpu:'LOAD',ram:'GiB USED',gpu:'LOAD',vram:'GiB USED'}[key],style_class:'fw-unit'}));
-                const track=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
+                const track=dotTrack();
                 this.bars[key]=dotBar({style_class:'fw-fill',width:0,height:3,x_align:Clutter.ActorAlign.START});
                 track.set_child(this.bars[key]); tile.add_child(track); row.add_child(this.tileGlass.wrap(tile));
             }
@@ -55,7 +63,7 @@ class ForestResources extends Desklet.Desklet {
         this.diskTitle=new St.Label({text:'DISK · /',style_class:'fw-caption'});
         this.diskValue=new St.Label({text:'—',style_class:'fw-value'});
         this.diskDetail=new St.Label({text:'GiB FREE',style_class:'fw-unit'});
-        this.diskTrack=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
+        this.diskTrack=dotTrack();
         this.diskFill=dotBar({style_class:'fw-fill',width:0,height:3});
         this.diskTrack.set_child(this.diskFill);
         for(const child of [this.diskTitle,this.diskValue,this.diskDetail,this.diskTrack])this.disk.add_child(child);
