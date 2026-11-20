@@ -43,7 +43,7 @@ class TileGlass {
     sync(){for(const item of this.items)this.syncItem(item);}
     destroy(){
         this.owner.disconnect(this.positionId);
-        for(const item of this.items){item.tile.disconnect(item.id);item.viewport.remove_all_effects();item.viewport.destroy();}
+        for(const item of this.items){item.tile.disconnect(item.id);item.viewport.remove_effect(item.effect);item.viewport.destroy();}
         this.items=[];
     }
 }
