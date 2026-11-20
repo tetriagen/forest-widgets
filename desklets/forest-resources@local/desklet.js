@@ -14,6 +14,7 @@ const Soup = imports.gi.Soup;
 const Slider=imports.ui.slider;
 const Settings=imports.ui.settings;
 const PopupMenu=imports.ui.popupMenu;
+const {TileGlass}=require('./tile-glass');
 const MPRIS = 'org.mpris.MediaPlayer2.Player';
 function read(path) {
     try { const [ok, bytes] = GLib.file_get_contents(path); return ok ? ByteArray.toString(bytes) : ''; }
@@ -23,9 +24,9 @@ class ForestResources extends Desklet.Desklet {
     constructor(metadata,id){
         super(metadata,id);
         this.dead=false;this.previous=null;this.tick=0;this.gpuText='';this.cancel=new Gio.Cancellable();
-        this.clearBackdrop();this.root=new St.BoxLayout({vertical:true,style_class:'fw-root'});
+        this.clearBackdrop();this.root=new St.BoxLayout({vertical:true,style_class:'fw-root fw-resources'});
         const grid=new St.BoxLayout({vertical:true,style_class:'fw-grid'});
-        this.values={}; this.bars={};this.tiles=[];
+        this.values={}; this.bars={};this.tiles=[];this.tileGlass=new TileGlass(this.actor);
         for (const rowKeys of [['cpu','ram'],['gpu','vram']]) {
             const row=new St.BoxLayout({style_class:'fw-row'});
             for (const key of rowKeys) {
@@ -36,7 +37,7 @@ class ForestResources extends Desklet.Desklet {
                 tile.add_child(new St.Label({text:{cpu:'LOAD',ram:'GiB USED',gpu:'LOAD',vram:'GiB USED'}[key],style_class:'fw-unit'}));
                 const track=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
                 this.bars[key]=new St.Widget({style_class:'fw-fill',width:0,height:3,x_align:Clutter.ActorAlign.START});
-                track.set_child(this.bars[key]); tile.add_child(track); row.add_child(tile);
+                track.set_child(this.bars[key]); tile.add_child(track); row.add_child(this.tileGlass.wrap(tile));
             }
             grid.add_child(row);
         }
@@ -48,14 +49,14 @@ class ForestResources extends Desklet.Desklet {
         this.diskFill=new St.Widget({style_class:'fw-fill',width:0,height:3});
         this.diskTrack.set_child(this.diskFill);
         for(const child of [this.diskTitle,this.diskValue,this.diskDetail,this.diskTrack])this.disk.add_child(child);
-        grid.add_child(this.disk);
+        grid.add_child(this.tileGlass.wrap(this.disk));
         this.root.add_child(grid);this.card=grid;
         this.setContent(this.root);this.setHeader('Forest Resources');this.setupSettings();this.applySettings();
         this.sampleDisk();this.diskTimer=Mainloop.timeout_add_seconds(30,()=>{this.sampleDisk();return !this.dead;});
         this.sample();this.timer=Mainloop.timeout_add_seconds(3,()=>{this.sample();return !this.dead;});
     }
     on_desklet_removed(){
-        this.dead=true;if(this.diskCancel)this.diskCancel.cancel();this.cancel.cancel();if(this.diskTimer)Mainloop.source_remove(this.diskTimer);if(this.timer)Mainloop.source_remove(this.timer);
+        this.dead=true;if(this.tileGlass)this.tileGlass.destroy();if(this.diskCancel)this.diskCancel.cancel();this.cancel.cancel();if(this.diskTimer)Mainloop.source_remove(this.diskTimer);if(this.timer)Mainloop.source_remove(this.timer);
         if(this.gpuTimeout)Mainloop.source_remove(this.gpuTimeout);if(this.gpuProcess)this.gpuProcess.force_exit();
         if(this.clampTimer)Mainloop.source_remove(this.clampTimer);if(this.settings)this.settings.finalize();
     }
@@ -78,7 +79,7 @@ class ForestResources extends Desklet.Desklet {
     }
     glassStyle(){
         const a=(this.cardOpacity||55)/100;
-        return 'background-color: rgba(13,34,22,'+a+'); background-gradient-direction: vertical; background-gradient-start: rgba(66,96,76,'+(a*0.8)+'); background-gradient-end: rgba(7,23,14,'+a+'); border-color: rgba(189,228,201,0.3);';
+        return 'background-color: rgba(29,31,35,'+(a*0.30)+'); background-gradient-direction: vertical; background-gradient-start: rgba(190,196,207,'+(a*0.12)+'); background-gradient-end: rgba(22,24,29,'+(a*0.22)+'); border-color: rgba(255,255,255,0.18);';
     }
     clampPosition(){
         if(this.dead||!this.actor.mapped)return;
@@ -97,9 +98,9 @@ class ForestResources extends Desklet.Desklet {
         this.sizeClass='forest-size-'+percent;this.root.add_style_class_name(this.sizeClass);
         this.resizeContent(scale);
         if(this.clampTimer)Mainloop.source_remove(this.clampTimer);
-        this.clampTimer=Mainloop.timeout_add(100,()=>{this.clampTimer=0;this.clampPosition();return false;});
-        const families={'system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
-        this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'";');
+        this.clampTimer=Mainloop.timeout_add(100,()=>{this.clampTimer=0;this.clampPosition();if(this.tileGlass)this.tileGlass.sync();return false;});
+        const families={'manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
+        this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'"; border-radius: 24px;');
         if(this.card)this.card.set_style('background-color: transparent; border: none; padding: 0;');
         for(const tile of this.tiles)tile.set_style(this.glassStyle());
         // Match both columns including their padding, borders and the gap.

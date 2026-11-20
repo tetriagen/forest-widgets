@@ -424,3 +424,129 @@
 .forest-size-160 .fw-album { width: 368px; text-align: center; color: #617d69; font-size: 14px; }
 .forest-size-160 .fw-time { color: #789681; font-size: 14px; }
 .forest-size-160 .fw-slider { height: 22px; min-width: 80px; color: #bed9c7; -slider-height: 5px; -slider-background-color: #223c2c; -slider-active-background-color: #94c7a4; -slider-border-color: transparent; -slider-active-border-color: transparent; -slider-border-width: 0px; -slider-handle-radius: 6px; }
+
+/* One edge player: half cover + real spectrum, controls alongside. */
+.fw-details { spacing: 9px; }
+.fw-radial .fw-music { background-color: transparent; border: none; box-shadow: none; spacing: 4px; padding: 0; }
+.fw-radial .fw-disc-box { padding: 0; }
+.fw-radial .fw-details { spacing: 8px; padding: 12px; border-radius: 18px; background-color: transparent; }
+.fw-radial .fw-title { text-align: left; color: #ffffff; font-weight: bold; }
+.fw-radial .fw-artist { text-align: left; color: #d1d3d6; }
+.fw-radial .fw-album { text-align: left; color: #95999f; }
+.fw-radial .fw-source, .fw-radial .fw-gear, .fw-radial .fw-time { color: #b8bcc3; }
+.fw-radial .fw-control { color: #ecedf0; }
+.fw-radial .fw-play { color: #ffffff; background-color: rgba(46,49,55,0.88); border-radius: 99px; }
+.fw-radial .fw-control:hover { background-color: rgba(255,255,255,0.12); }
+.fw-radial .fw-play:hover { background-color: rgba(78,82,90,0.95); }
+.fw-radial .fw-active { color: #ffffff; background-color: rgba(255,255,255,0.09); }
+.fw-radial.forest-size-75 { width: 312px; }
+.fw-radial.forest-size-75 .fw-music { width: 312px; padding: 0; }
+.fw-radial.forest-size-75 .fw-details { width: 164px; padding: 9px; spacing: 6px; }
+.fw-radial.forest-size-75 .fw-title, .fw-radial.forest-size-75 .fw-artist, .fw-radial.forest-size-75 .fw-album { width: 164px; }
+.fw-radial.forest-size-75 .fw-title { font-size: 12px; }
+.fw-radial.forest-size-75 .fw-artist { font-size: 8px; }
+.fw-radial.forest-size-80 { width: 333px; }
+.fw-radial.forest-size-80 .fw-music { width: 333px; padding: 0; }
+.fw-radial.forest-size-80 .fw-details { width: 174px; padding: 10px; spacing: 6px; }
+.fw-radial.forest-size-80 .fw-title, .fw-radial.forest-size-80 .fw-artist, .fw-radial.forest-size-80 .fw-album { width: 174px; }
+.fw-radial.forest-size-80 .fw-title { font-size: 13px; }
+.fw-radial.forest-size-80 .fw-artist { font-size: 9px; }
+.fw-radial.forest-size-85 { width: 354px; }
+.fw-radial.forest-size-85 .fw-music { width: 354px; padding: 0; }
+.fw-radial.forest-size-85 .fw-details { width: 185px; padding: 10px; spacing: 7px; }
+.fw-radial.forest-size-85 .fw-title, .fw-radial.forest-size-85 .fw-artist, .fw-radial.forest-size-85 .fw-album { width: 185px; }
+.fw-radial.forest-size-85 .fw-title { font-size: 14px; }
+.fw-radial.forest-size-85 .fw-artist { font-size: 9px; }
+.fw-radial.forest-size-90 { width: 374px; }
+.fw-radial.forest-size-90 .fw-music { width: 374px; padding: 0; }
+.fw-radial.forest-size-90 .fw-details { width: 196px; padding: 11px; spacing: 7px; }
+.fw-radial.forest-size-90 .fw-title, .fw-radial.forest-size-90 .fw-artist, .fw-radial.forest-size-90 .fw-album { width: 196px; }
+.fw-radial.forest-size-90 .fw-title { font-size: 14px; }
+.fw-radial.forest-size-90 .fw-artist { font-size: 10px; }
+.fw-radial.forest-size-95 { width: 395px; }
+.fw-radial.forest-size-95 .fw-music { width: 395px; padding: 0; }
+.fw-radial.forest-size-95 .fw-details { width: 207px; padding: 11px; spacing: 8px; }
+.fw-radial.forest-size-95 .fw-title, .fw-radial.forest-size-95 .fw-artist, .fw-radial.forest-size-95 .fw-album { width: 207px; }
+.fw-radial.forest-size-95 .fw-title { font-size: 15px; }
+.fw-radial.forest-size-95 .fw-artist { font-size: 10px; }
+.fw-radial.forest-size-100 { width: 416px; }
+.fw-radial.forest-size-100 .fw-music { width: 416px; padding: 0; }
+.fw-radial.forest-size-100 .fw-details { width: 218px; padding: 12px; spacing: 8px; }
+.fw-radial.forest-size-100 .fw-title, .fw-radial.forest-size-100 .fw-artist, .fw-radial.forest-size-100 .fw-album { width: 218px; }
+.fw-radial.forest-size-100 .fw-title { font-size: 16px; }
+.fw-radial.forest-size-100 .fw-artist { font-size: 11px; }
+.fw-radial.forest-size-105 { width: 437px; }
+.fw-radial.forest-size-105 .fw-music { width: 437px; padding: 0; }
+.fw-radial.forest-size-105 .fw-details { width: 229px; padding: 13px; spacing: 8px; }
+.fw-radial.forest-size-105 .fw-title, .fw-radial.forest-size-105 .fw-artist, .fw-radial.forest-size-105 .fw-album { width: 229px; }
+.fw-radial.forest-size-105 .fw-title { font-size: 17px; }
+.fw-radial.forest-size-105 .fw-artist { font-size: 12px; }
+.fw-radial.forest-size-110 { width: 458px; }
+.fw-radial.forest-size-110 .fw-music { width: 458px; padding: 0; }
+.fw-radial.forest-size-110 .fw-details { width: 240px; padding: 13px; spacing: 9px; }
+.fw-radial.forest-size-110 .fw-title, .fw-radial.forest-size-110 .fw-artist, .fw-radial.forest-size-110 .fw-album { width: 240px; }
+.fw-radial.forest-size-110 .fw-title { font-size: 18px; }
+.fw-radial.forest-size-110 .fw-artist { font-size: 12px; }
+.fw-radial.forest-size-115 { width: 478px; }
+.fw-radial.forest-size-115 .fw-music { width: 478px; padding: 0; }
+.fw-radial.forest-size-115 .fw-details { width: 251px; padding: 14px; spacing: 9px; }
+.fw-radial.forest-size-115 .fw-title, .fw-radial.forest-size-115 .fw-artist, .fw-radial.forest-size-115 .fw-album { width: 251px; }
+.fw-radial.forest-size-115 .fw-title { font-size: 18px; }
+.fw-radial.forest-size-115 .fw-artist { font-size: 13px; }
+.fw-radial.forest-size-120 { width: 499px; }
+.fw-radial.forest-size-120 .fw-music { width: 499px; padding: 0; }
+.fw-radial.forest-size-120 .fw-details { width: 262px; padding: 14px; spacing: 10px; }
+.fw-radial.forest-size-120 .fw-title, .fw-radial.forest-size-120 .fw-artist, .fw-radial.forest-size-120 .fw-album { width: 262px; }
+.fw-radial.forest-size-120 .fw-title { font-size: 19px; }
+.fw-radial.forest-size-120 .fw-artist { font-size: 13px; }
+.fw-radial.forest-size-125 { width: 520px; }
+.fw-radial.forest-size-125 .fw-music { width: 520px; padding: 0; }
+.fw-radial.forest-size-125 .fw-details { width: 272px; padding: 15px; spacing: 10px; }
+.fw-radial.forest-size-125 .fw-title, .fw-radial.forest-size-125 .fw-artist, .fw-radial.forest-size-125 .fw-album { width: 272px; }
+.fw-radial.forest-size-125 .fw-title { font-size: 20px; }
+.fw-radial.forest-size-125 .fw-artist { font-size: 14px; }
+.fw-radial.forest-size-130 { width: 541px; }
+.fw-radial.forest-size-130 .fw-music { width: 541px; padding: 0; }
+.fw-radial.forest-size-130 .fw-details { width: 283px; padding: 16px; spacing: 10px; }
+.fw-radial.forest-size-130 .fw-title, .fw-radial.forest-size-130 .fw-artist, .fw-radial.forest-size-130 .fw-album { width: 283px; }
+.fw-radial.forest-size-130 .fw-title { font-size: 21px; }
+.fw-radial.forest-size-130 .fw-artist { font-size: 14px; }
+.fw-radial.forest-size-135 { width: 562px; }
+.fw-radial.forest-size-135 .fw-music { width: 562px; padding: 0; }
+.fw-radial.forest-size-135 .fw-details { width: 294px; padding: 16px; spacing: 11px; }
+.fw-radial.forest-size-135 .fw-title, .fw-radial.forest-size-135 .fw-artist, .fw-radial.forest-size-135 .fw-album { width: 294px; }
+.fw-radial.forest-size-135 .fw-title { font-size: 22px; }
+.fw-radial.forest-size-135 .fw-artist { font-size: 15px; }
+.fw-radial.forest-size-140 { width: 582px; }
+.fw-radial.forest-size-140 .fw-music { width: 582px; padding: 0; }
+.fw-radial.forest-size-140 .fw-details { width: 305px; padding: 17px; spacing: 11px; }
+.fw-radial.forest-size-140 .fw-title, .fw-radial.forest-size-140 .fw-artist, .fw-radial.forest-size-140 .fw-album { width: 305px; }
+.fw-radial.forest-size-140 .fw-title { font-size: 22px; }
+.fw-radial.forest-size-140 .fw-artist { font-size: 15px; }
+.fw-radial.forest-size-145 { width: 603px; }
+.fw-radial.forest-size-145 .fw-music { width: 603px; padding: 0; }
+.fw-radial.forest-size-145 .fw-details { width: 316px; padding: 17px; spacing: 12px; }
+.fw-radial.forest-size-145 .fw-title, .fw-radial.forest-size-145 .fw-artist, .fw-radial.forest-size-145 .fw-album { width: 316px; }
+.fw-radial.forest-size-145 .fw-title { font-size: 23px; }
+.fw-radial.forest-size-145 .fw-artist { font-size: 16px; }
+.fw-radial.forest-size-150 { width: 624px; }
+.fw-radial.forest-size-150 .fw-music { width: 624px; padding: 0; }
+.fw-radial.forest-size-150 .fw-details { width: 327px; padding: 18px; spacing: 12px; }
+.fw-radial.forest-size-150 .fw-title, .fw-radial.forest-size-150 .fw-artist, .fw-radial.forest-size-150 .fw-album { width: 327px; }
+.fw-radial.forest-size-150 .fw-title { font-size: 24px; }
+.fw-radial.forest-size-150 .fw-artist { font-size: 16px; }
+.fw-radial.forest-size-155 { width: 645px; }
+.fw-radial.forest-size-155 .fw-music { width: 645px; padding: 0; }
+.fw-radial.forest-size-155 .fw-details { width: 338px; padding: 19px; spacing: 12px; }
+.fw-radial.forest-size-155 .fw-title, .fw-radial.forest-size-155 .fw-artist, .fw-radial.forest-size-155 .fw-album { width: 338px; }
+.fw-radial.forest-size-155 .fw-title { font-size: 25px; }
+.fw-radial.forest-size-155 .fw-artist { font-size: 17px; }
+.fw-radial.forest-size-160 { width: 666px; }
+.fw-radial.forest-size-160 .fw-music { width: 666px; padding: 0; }
+.fw-radial.forest-size-160 .fw-details { width: 349px; padding: 19px; spacing: 13px; }
+.fw-radial.forest-size-160 .fw-title, .fw-radial.forest-size-160 .fw-artist, .fw-radial.forest-size-160 .fw-album { width: 349px; }
+.fw-radial.forest-size-160 .fw-title { font-size: 26px; }
+.fw-radial.forest-size-160 .fw-artist { font-size: 18px; }
+
+.fw-radial .fw-title, .fw-radial .fw-artist, .fw-radial .fw-album, .fw-radial .fw-time, .fw-radial .fw-source { text-shadow: 0 2px 4px rgba(0,0,0,0.85); }
+.fw-radial .fw-play { border: 1px solid rgba(255,255,255,0.25); }

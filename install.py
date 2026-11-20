@@ -22,7 +22,7 @@ def main():
     actions.add_argument('--check', action='store_true', help='Check dependencies without changing anything')
     actions.add_argument('--disable', action='store_true', help='Disable both widgets; keep files and settings')
     actions.add_argument('--restore', type=Path, metavar='BACKUP', help='Restore a backup folder printed during installation')
-    parser.add_argument('--no-font', action='store_true', help='Skip installing the bundled Monocraft font')
+    parser.add_argument('--no-font', action='store_true', help='Skip installing the bundled Manrope and Monocraft fonts')
     args = parser.parse_args()
     if 'cinnamon' not in os.environ.get('XDG_CURRENT_DESKTOP', '').lower():
         raise RuntimeError('Run this command in a terminal inside your Cinnamon desktop session.')
@@ -44,7 +44,13 @@ def main():
             for name in ('desklet.js', 'metadata.json', 'settings-schema.json', 'stylesheet.css'):
                 if not (ROOT / 'desklets' / uuid / name).is_file():
                     raise RuntimeError('Missing project file: ' + uuid + '/' + name)
+        for module in ('spectrum.js', 'arc-seek.js'):
+            if not (ROOT / 'desklets/forest-player@local' / module).is_file():
+                raise RuntimeError('Missing ' + module)
+        if not (ROOT / 'desklets/forest-resources@local/tile-glass.js').is_file():
+            raise RuntimeError('Missing tile-glass.js')
         print('Cinnamon session, GTK/GdkPixbuf, Soup 3 and widget files: OK')
+        print('Audio spectrum: ' + ('available' if shutil.which('parec') else 'install pulseaudio-utils for live bars'))
         print('Optional NVIDIA sensor: ' + ('available' if shutil.which('nvidia-smi') else 'not installed'))
         return
 
@@ -95,15 +101,16 @@ def main():
     if not args.no_font:
         fonts = HOME / '.local/share/fonts'
         fonts.mkdir(parents=True, exist_ok=True)
-        target_font = fonts / 'Monocraft-Forest.ttf'
-        if not target_font.exists():
-            shutil.copyfile(ROOT / 'fonts/Monocraft.ttf', target_font)
+        for name in ('Monocraft', 'Manrope'):
+            target_font = fonts / (name + '-Forest.ttf')
+            if not target_font.exists():
+                shutil.copyfile(ROOT / ('fonts/' + name + '.ttf'), target_font)
         if shutil.which('fc-cache'):
             subprocess.run(['fc-cache', str(fonts)], check=True)
     monitor = display.get_primary_monitor() or display.get_monitor(0)
     geometry = monitor.get_geometry()
     positions = ((geometry.x + max(16, geometry.width - 320), geometry.y + 60),
-                 (geometry.x + max(16, geometry.width - 620), geometry.y + 60))
+                 (geometry.x + max(0, geometry.width - 380), geometry.y + max(48, geometry.height - 428)))
     next_id = settings.get_int('next-desklet-id')
     definitions = existing[:]
     for uuid, (x, y) in zip(UUIDS, positions):
@@ -118,7 +125,7 @@ def main():
     print('Forest Widgets installed. Right-click a widget → Configure.')
     print('Backup: ' + str(backup))
     print('Restore: python3 ' + str(ROOT / 'install.py') + ' --restore ' + str(backup))
-    print('If Monocraft is missing on first use, log out and back in to refresh the desktop font cache.')
+    print('If a font is missing on first use, log out and back in to refresh the desktop font cache.')
 
 
 if __name__ == '__main__':

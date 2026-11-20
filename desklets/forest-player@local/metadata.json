@@ -1,1 +1,8 @@
-{"uuid": "forest-player@local", "name": "ForestPlayer", "description": "Independent transparent Forest desktop widget", "max-instances": 1, "prevent-decorations": true, "version": 4}
+{
+  "uuid": "forest-player@local",
+  "name": "Forest Player",
+  "description": "Floating album cover with a live radial spectrum and MPRIS controls",
+  "max-instances": 1,
+  "prevent-decorations": true,
+  "version": 6
+}
