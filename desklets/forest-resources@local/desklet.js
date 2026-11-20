@@ -24,8 +24,8 @@ function dotBar(props,empty=false){
     const bar=new St.DrawingArea(props);
     bar.connect('repaint',()=>{
         const cr=bar.get_context(),[w,h]=bar.get_surface_size();
-        if(empty)cr.setSourceRGBA(1,1,1,0.75);else cr.setSourceRGBA(0.94,0.17,0.2,1);
-        for(let x=2;x<w;x+=6){cr.arc(x,h/2,Math.min(1.7,h/2),0,Math.PI*2);cr.fill();}
+        if(empty)cr.setSourceRGBA(1,1,1,0.13);else cr.setSourceRGBA(0.83,0.87,0.93,1);
+        cr.rectangle(0,0,w,h);cr.fill();
         cr.$dispose();
     });
     return bar;
@@ -70,8 +70,8 @@ class ForestResources extends Desklet.Desklet {
         grid.add_child(this.tileGlass.wrap(this.disk));
         this.root.add_child(grid);this.card=grid;
         this.setContent(this.root);this.setHeader('Forest Resources');this.setupSettings();this.applySettings();
-        this.sampleDisk();this.diskTimer=Mainloop.timeout_add_seconds(30,()=>{this.sampleDisk();return !this.dead;});
-        this.sample();this.timer=Mainloop.timeout_add_seconds(3,()=>{this.sample();return !this.dead;});
+        this.sampleDisk();this.diskTimer=Mainloop.timeout_add_seconds(120,()=>{if(this.actor.mapped)this.sampleDisk();return !this.dead;});
+        this.sample();this.timer=Mainloop.timeout_add_seconds(5,()=>{this.sample();return !this.dead;});
     }
     on_desklet_removed(){
         this.dead=true;if(this.tileGlass)this.tileGlass.destroy();if(this.diskCancel)this.diskCancel.cancel();this.cancel.cancel();if(this.diskTimer)Mainloop.source_remove(this.diskTimer);if(this.timer)Mainloop.source_remove(this.timer);
@@ -83,6 +83,7 @@ class ForestResources extends Desklet.Desklet {
         this.settings.bind('disk-path','diskPath',()=>this.sampleDisk());
         this.settings.bind('font-family','fontFamily',()=>this.applySettings());
         this.settings.bind('glass-panels','glassPanels',()=>this.applySettings());
+        this.settings.bind('matte-panels','mattePanels',()=>this.applySettings());
         this.settings.bind('opacity','cardOpacity',()=>this.applySettings());
         this.settings.bind('size-percent','sizePercent',()=>this.applySettings());
     }
@@ -97,7 +98,7 @@ class ForestResources extends Desklet.Desklet {
         this.renderScale=scale;
     }
     glassStyle(){
-        if(!this.glassPanels)return 'background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
+        if(!this.glassPanels)return this.mattePanels?'background-color: rgba(24,25,29,0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.07); box-shadow: none;':'background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
         const a=(this.cardOpacity||55)/100;
         const radius=Math.round(24*(this.sizePercent||100)/100);
         if(this.tileGlass.Refraction)return 'border-radius: '+radius+'px; background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
@@ -183,7 +184,7 @@ class ForestResources extends Desklet.Desklet {
         this.values.ram.set_text(used);
         this.bars.cpu.set_width(Math.round((98 * (parseFloat(cpu) || 0)/100)*(this.renderScale||1)*(global.ui_scale||1)));
         this.bars.ram.set_width(Math.round((all && avail ? 98 * (1-(+avail[1])/(+all[1])) : 0)*(this.renderScale||1)*(global.ui_scale||1)));
-        if ((this.tick++ % 5) === 0) this.sampleGPU();
+        if ((this.tick++ % 6) === 0) this.sampleGPU();
     }
     sampleGPU() {
         // Never run nvidia-smi against a suspended GPU or an unknown power state.

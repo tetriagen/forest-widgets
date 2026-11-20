@@ -1,7 +1,7 @@
 {
     "font-family": {
         "type": "combobox",
-        "default": "doto",
+        "default": "manrope",
         "description": "Шрифт",
         "options": {
             "Системный": "system",
@@ -40,5 +40,10 @@
         "type": "checkbox",
         "default": false,
         "description": "Стеклянные подложки за показателями"
+    },
+    "matte-panels": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Матовые плитки (без размытия и шейдеров)"
     }
 }

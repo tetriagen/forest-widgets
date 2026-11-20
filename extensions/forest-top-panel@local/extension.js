@@ -20,7 +20,7 @@ function attach(){
             })]);
         }
         if(!panel.actor.has_style_class_name('forest-top-panel'))panel.actor.add_style_class_name('forest-top-panel');
-        panel.actor.set_style('background: #111216; background-color: #111216; border-bottom: 1px solid #33353a; color: #eeeeee; font-family: "Ndot"; font-size: 14px;');
+        panel.actor.set_style('background: #111216; background-color: #111216; border-bottom: 1px solid #33353a; color: #eeeeee; font-family: "Manrope"; font-size: 14px;');
         styleClocks(panel.actor);
         for(const box of [panel._leftBox,panel._centerBox,panel._rightBox]){
             if(box && !watched.includes(box)){watched.push(box);signals.push([box,box.connect('actor-added',schedule)]);}

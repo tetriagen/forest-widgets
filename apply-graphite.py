@@ -51,11 +51,12 @@ def main():
     def save(uuid):
         paths[uuid].write_text(json.dumps(data[uuid], ensure_ascii=False, indent=2))
     for uuid in widget_ids:
-        data[uuid]['font-family']['value'] = 'doto'
+        data[uuid]['font-family']['value'] = 'manrope'
     data[widget_ids[1]]['glass-panels']['value'] = False
+    data[widget_ids[1]]['matte-panels']['value'] = True
     data[widget_ids[1]]['size-percent']['value'] = 100
     player = data[widget_ids[0]]
-    for key, value in {'appearance': 'matrix', 'dock-side': 'right', 'show-album': False, 'compact': False, 'size-percent': 100}.items():
+    for key, value in {'appearance': 'radial', 'dock-side': 'right', 'show-album': False, 'compact': False, 'size-percent': 100, 'spectrum-fps': 30}.items():
         player[key]['value'] = value
     for uuid in widget_ids:
         save(uuid)
@@ -90,7 +91,7 @@ def main():
     display = Gdk.Display.get_default()
     monitor = display.get_primary_monitor() or display.get_monitor(0)
     geom = monitor.get_geometry()
-    positions = {'forest-player@local': (geom.x + int(geom.width*0.474), geom.y + 78),
+    positions = {'forest-player@local': (geom.x + max(0, geom.width-380), geom.y + max(48, geom.height-428)),
                  'forest-resources@local': (geom.x + 28, geom.y + max(48, geom.height - 460))}
     adjusted = []
     for definition in active:
@@ -108,7 +109,7 @@ def main():
         background.set_string('picture-uri', target.as_uri())
         background.set_string('picture-options', 'zoom')
     Gio.Settings.sync()
-    print('Applied: Glyph Matrix player and dot resource indicators with red accents.')
+    print('Applied: half-circle player and dot resource indicators with red accents.')
     print('Settings backup: ' + str(backup))
 
 

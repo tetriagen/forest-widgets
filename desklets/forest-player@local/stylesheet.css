@@ -552,9 +552,9 @@
 .fw-radial .fw-play { border: 1px solid rgba(255,255,255,0.25); }
 
 /* Nothing-inspired dot typography and restrained red accents. */
-.fw-root.fw-radial .fw-play { background-color: #ef2b33; color: #ffffff; border: none; box-shadow: none; }
-.fw-root.fw-radial .fw-active { color: #ef2b33; background-color: transparent; }
-.fw-root.fw-radial .fw-source { color: #ef2b33; font-size: 11px; }
+.fw-root.fw-radial .fw-play { background-color: #dce1e9; color: #ffffff; border: none; box-shadow: none; }
+.fw-root.fw-radial .fw-active { color: #dce1e9; background-color: transparent; }
+.fw-root.fw-radial .fw-source { color: #dce1e9; font-size: 11px; }
 .fw-root.fw-resources .fw-track { background-color: transparent; height: 5px; }
 .fw-root.fw-resources .fw-fill { background-color: transparent; height: 5px; }
 .fw-root.fw-resources .fw-caption { color: #e8e8e8; font-weight: bold; }
@@ -562,9 +562,13 @@
 .fw-root.fw-resources .fw-unit { color: #a5a5a5; }
 
 .fw-root.fw-matrix .fw-control { color: #eeeeee; }
-.fw-root.fw-matrix .fw-active { color: #ef2b33; }
-.fw-root.fw-matrix .fw-play { background-color: #ef2b33; border: none; color: white; }
+.fw-root.fw-matrix .fw-active { color: #dce1e9; }
+.fw-root.fw-matrix .fw-play { background-color: #dce1e9; border: none; color: white; }
 .fw-root.fw-matrix .fw-disc-box { padding: 0; }
 
 .fw-root.fw-matrix .fw-artist, .fw-root.fw-matrix .fw-gear { color: #c7c9ce; }
 .fw-root.fw-matrix .fw-title { color: #f4f5f7; }
+
+.fw-root.fw-radial .fw-control { color: #e1e5ec; }
+.fw-root.fw-radial .fw-play { color: #181a1f; background-color: #e1e5ec; }
+.fw-root.fw-radial .fw-source, .fw-root.fw-radial .fw-gear { color: #aeb5c0; }

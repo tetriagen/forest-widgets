@@ -7,6 +7,11 @@ class SpectrumAnalyzer {
         this.size = 1024;
         this.rate = 22050;
         this.levels = new Float64Array(48);
+        this.bands=Array.from({length:48},(_,band)=>{
+            const lo=Math.max(1,Math.floor(60*Math.pow(160,band/48)*this.size/this.rate));
+            const hi=Math.min(this.size/2,Math.max(lo+1,Math.ceil(60*Math.pow(160,(band+1)/48)*this.size/this.rate)));
+            return [lo,hi];
+        });
         this.real = new Float64Array(this.size);
         this.imag = new Float64Array(this.size);
         this.window = Float64Array.from({length: this.size}, (_, i) =>
@@ -39,8 +44,7 @@ class SpectrumAnalyzer {
             }
         }
         for (let band = 0; band < this.levels.length; band++) {
-            const lo = Math.max(1, Math.floor(60 * Math.pow(160, band / 48) * n / this.rate));
-            const hi = Math.min(n / 2, Math.max(lo + 1, Math.ceil(60 * Math.pow(160, (band + 1) / 48) * n / this.rate)));
+            const [lo,hi]=this.bands[band];
             let peak = 0;
             for (let bin = lo; bin < hi; bin++) peak = Math.max(peak, Math.hypot(re[bin], im[bin]) * 4 / n);
             const target = Math.max(0, Math.min(1, (20 * Math.log10(Math.max(peak, 1e-6)) + 58) / 58));

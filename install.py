@@ -112,7 +112,7 @@ def main():
     monitor = display.get_primary_monitor() or display.get_monitor(0)
     geometry = monitor.get_geometry()
     positions = ((geometry.x + max(16, geometry.width - 320), geometry.y + 60),
-                 (geometry.x + int(geometry.width * 0.474), geometry.y + 78))
+                 (geometry.x + max(0, geometry.width - 380), geometry.y + max(48, geometry.height - 428)))
     next_id = settings.get_int('next-desklet-id')
     definitions = existing[:]
     for uuid, (x, y) in zip(UUIDS, positions):

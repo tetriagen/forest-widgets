@@ -433,9 +433,9 @@
 .fw-root.fw-resources .fw-fill { background-color: #e7ebf2; }
 
 /* Nothing-inspired dot typography and restrained red accents. */
-.fw-root.fw-radial .fw-play { background-color: #ef2b33; color: #ffffff; border: none; box-shadow: none; }
-.fw-root.fw-radial .fw-active { color: #ef2b33; background-color: transparent; }
-.fw-root.fw-radial .fw-source { color: #ef2b33; font-size: 11px; }
+.fw-root.fw-radial .fw-play { background-color: #dce1e9; color: #ffffff; border: none; box-shadow: none; }
+.fw-root.fw-radial .fw-active { color: #dce1e9; background-color: transparent; }
+.fw-root.fw-radial .fw-source { color: #dce1e9; font-size: 11px; }
 .fw-root.fw-resources .fw-track { background-color: transparent; height: 5px; }
 .fw-root.fw-resources .fw-fill { background-color: transparent; height: 5px; }
 .fw-root.fw-resources .fw-caption { color: #e8e8e8; font-weight: bold; }

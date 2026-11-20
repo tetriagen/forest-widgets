@@ -1,7 +1,7 @@
 {
     "appearance": {
         "type": "combobox",
-        "default": "matrix",
+        "default": "radial",
         "description": "Внешний вид плеера",
         "options": {
             "Полукруг у края экрана": "radial",
@@ -16,7 +16,7 @@
     },
     "font-family": {
         "type": "combobox",
-        "default": "doto",
+        "default": "manrope",
         "description": "Шрифт",
         "options": {
             "Системный": "system",
@@ -75,6 +75,16 @@
         "options": {
             "Слева": "left",
             "Справа": "right"
+        }
+    },
+    "spectrum-fps": {
+        "type": "combobox",
+        "default": 30,
+        "description": "Частота эквалайзера",
+        "options": {
+            "20 FPS — экономия": 20,
+            "30 FPS — баланс": 30,
+            "60 FPS — плавно": 60
         }
     }
 }

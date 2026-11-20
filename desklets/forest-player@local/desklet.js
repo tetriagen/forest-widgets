@@ -143,6 +143,7 @@ class ForestPlayer extends Desklet.Desklet {
         this.settings.bind('font-family','fontFamily',()=>this.applySettings());
         this.settings.bind('opacity','cardOpacity',()=>this.applySettings());
         this.settings.bind('size-percent','sizePercent',()=>this.applySettings());
+        this.settings.bind('spectrum-fps','spectrumFps',()=>{if(this.spectrumFrameTimer){Mainloop.source_remove(this.spectrumFrameTimer);this.spectrumFrameTimer=0;if(this.spectrumTarget)this.animateSpectrum(this.spectrumTarget);}});
     }
     clearBackdrop() {
         const clear='background-color: transparent; background-gradient-start: transparent; background-gradient-end: transparent; border-image: none; border: none; box-shadow: none; padding: 0;';
@@ -267,7 +268,11 @@ class ForestPlayer extends Desklet.Desklet {
                 const a=angles[i]*Math.PI/180,sz=i===2?42:32;
                 place(button,cx+Math.cos(a)*176-sz/2,cy+Math.sin(a)*176-sz/2,sz,sz,angles[i]-180);
             });
-            this.elapsed.hide();this.durationLabel.hide();
+            this.playButton.set_style('color: #181a1f; background-color: #e1e5ec; border: none;');
+            for(const button of [this.shuffleButton,this.previousButton,this.nextButton,this.repeatButton])button.set_style('color: #cbd2de; background-color: transparent;');
+            this.source.set_style('color: #aeb5c0; font-size: 11px;');
+            this.gear.set_style('color: #aeb5c0;');
+            this.elapsed.hide();this.durationLabel.hide();this.progress.actor.hide();
         }else{
             this.music.set_style(this.glassStyle());
             for(const home of this.homeActors){
@@ -337,10 +342,12 @@ class ForestPlayer extends Desklet.Desklet {
     updateRotation() {
         if (this.dead) return;
         const ws=global.workspace_manager.get_active_workspace();
+        const [px,py]=this.actor.get_transformed_position(),[pw,ph]=this.actor.get_transformed_size();
         const covered=global.get_window_actors().some(a=>{
             const w=a.meta_window;
-            return w && !w.minimized && w.showing_on_its_workspace() && w.located_on_workspace(ws) &&
-                ((w.maximized_horizontally && w.maximized_vertically) || w.is_fullscreen());
+            if(!w||w.minimized||!w.showing_on_its_workspace()||!w.located_on_workspace(ws)||w.get_window_type()===imports.gi.Meta.WindowType.DESKTOP)return false;
+            const r=w.get_frame_rect();
+            return r.x<=px&&r.y<=py&&r.x+r.width>=px+pw&&r.y+r.height>=py+ph;
         });
         this.covered=covered;
         this.updateAudioMonitor();
@@ -356,24 +363,27 @@ class ForestPlayer extends Desklet.Desklet {
     }
     animateSpectrum(levels) {
         if(this.dead)return;
-        this.spectrumTarget=Float64Array.from(levels);
+        if(!this.spectrumTarget)this.spectrumTarget=new Float64Array(48);
+        this.spectrumTarget.set(levels);
         if(!this.spectrumLevels)this.spectrumLevels=new Float64Array(48);
         if(this.spectrumFrameTimer)return;
         let previous=GLib.get_monotonic_time();
-        this.spectrumFrameTimer=Mainloop.timeout_add(16,()=>{
+        this.spectrumFrameTimer=Mainloop.timeout_add(Math.round(1000/(this.spectrumFps||30)),()=>{
             if(this.dead||!this.actor.mapped||this.covered||!['radial','matrix'].includes(this.appearance)||this.compact||!this.spectrumEnabled){
                 this.spectrumLevels.fill(0);this.spectrumFrameTimer=0;this.canvas.invalidate();return false;
             }
             const now=GLib.get_monotonic_time(),blend=1-Math.exp(-(now-previous)/40000);previous=now;
-            let moving=false;
+            let moving=false,changed=false;
             for(let i=0;i<48;i++){
                 const target=this.spectrumTarget[i]||0;
                 const value=this.spectrumLevels[i]+(target-this.spectrumLevels[i])*blend;
-                this.spectrumLevels[i]=Math.abs(value-target)<0.001?target:value;
+                const next=Math.abs(value-target)<0.001?target:value;
+                if(next!==this.spectrumLevels[i])changed=true;
+                this.spectrumLevels[i]=next;
                 if(this.spectrumLevels[i]!==target)moving=true;
             }
-            this.canvas.invalidate();
-            if(!moving&&!this.monitor.proc&&!this.monitor.fadeTimer){this.spectrumFrameTimer=0;return false;}
+            if(changed)this.canvas.invalidate();
+            if(!moving){this.spectrumFrameTimer=0;return false;}
             return true;
         });
     }
@@ -465,16 +475,14 @@ class ForestPlayer extends Desklet.Desklet {
         cr.setSource(glow);cr.arc(c,c,164,0,Math.PI*2);cr.fill();
         // Mirror 48 real frequency bands around the cover: 96 radial bars.
         cr.setLineWidth(2);cr.setLineCap(Cairo.LineCap.ROUND);
-        for(let i=0;i<96;i++){
+        for(let i=(this.dockSide==='right'?48:0);i<(this.dockSide==='right'?96:48);i++){
             const band=i<48?i:95-i,level=levels[band]||0;
             if(level<=0.001)continue;
             const angle=i/96*Math.PI*2-Math.PI/2;
-            const inner=r+17,outer=inner+level*45,alpha=Math.min(1,level*10);
-            for(let radius=inner;radius<outer;radius+=5){
-                const fade=Math.min(1,(outer-radius)/5);
-                cr.setSourceRGBA(0.96,0.97,1,alpha*fade);
-                cr.arc(c+Math.cos(angle)*radius,c+Math.sin(angle)*radius,1.35,0,Math.PI*2);cr.fill();
-            }
+            const inner=r+17,outer=inner+level*45,alpha=Math.min(1,level*10),cos=Math.cos(angle),sin=Math.sin(angle);
+            cr.setSourceRGBA(0.94,0.96,1,alpha);
+            cr.moveTo(c+cos*inner,c+sin*inner);
+            cr.lineTo(c+cos*outer,c+sin*outer);cr.stroke();
         }
         cr.setSourceRGBA(0.055,0.06,0.065,1);cr.arc(c,c,r,0,Math.PI*2);cr.fill();
         if(this.pixbuf){
@@ -496,9 +504,9 @@ class ForestPlayer extends Desklet.Desklet {
         const fraction=this.arcDragging?this.arcFraction:(this.progress?this.progress._value:0);
         const arc=(end)=>{if(sign<0)cr.arcNegative(c,c,98,start,end);else cr.arc(c,c,98,start,end);};
         cr.setLineWidth(2);cr.setSourceRGBA(1,1,1,0.18);arc(start+sign*Math.PI);cr.stroke();
-        if(fraction>0){cr.setSourceRGBA(0.94,0.17,0.2,0.95);arc(start+sign*Math.PI*fraction);cr.stroke();}
+        if(fraction>0){cr.setSourceRGBA(0.88,0.91,0.96,0.95);arc(start+sign*Math.PI*fraction);cr.stroke();}
         const head=start+sign*Math.PI*fraction;
-        cr.setSourceRGBA(0.94,0.17,0.2,1);cr.arc(c+Math.cos(head)*98,c+Math.sin(head)*98,3,0,Math.PI*2);cr.fill();
+        cr.setSourceRGBA(0.88,0.91,0.96,1);cr.arc(c+Math.cos(head)*98,c+Math.sin(head)*98,3,0,Math.PI*2);cr.fill();
         cr.$dispose();return true;
     }
     drawRecord(cr,w,h) {

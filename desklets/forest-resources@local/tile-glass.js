@@ -23,17 +23,19 @@ class TileGlass {
         const viewport=new Clutter.Actor({width:1,height:1,clip_to_allocation:true,reactive:false,visible:false});
         const wallpaper=new Clutter.Clone({source:this.background,reactive:false});
         viewport.add_child(wallpaper);
-        const effect=new this.Refraction({strength:0.78,blur_radius:18,edge_size:24,corner_radius:24,
-            rim_width:2.2,gloss:0.18,rgb_fringing:0.015,tint:0.08,tint_color:[0.92,0.95,1,1],shadow:0,backdrop_zoom:1.04});
-        viewport.add_effect_with_name('forest-tile-glass',effect);
         wrapper.add_child(viewport);wrapper.add_child(tile);
-        const item={tile,wrapper,viewport,wallpaper,effect};
+        const item={tile,wrapper,viewport,wallpaper,effect:null};
         item.id=tile.connect('notify::allocation',()=>this.syncItem(item));
         this.items.push(item);return wrapper;
     }
     setEnabled(enabled){
         this.enabled=enabled;
-        for(const item of this.items)item.viewport.visible=enabled;
+        for(const item of this.items){
+            if(enabled&&!item.effect){item.effect=new this.Refraction({strength:0.78,blur_radius:18,edge_size:24,corner_radius:24,
+            rim_width:2.2,gloss:0.18,rgb_fringing:0.015,tint:0.08,tint_color:[0.92,0.95,1,1],shadow:0,backdrop_zoom:1.04});item.viewport.add_effect_with_name('forest-tile-glass',item.effect);}
+            item.viewport.visible=enabled;
+            if(!enabled&&item.effect){item.viewport.remove_effect(item.effect);item.effect=null;}
+        }
         if(enabled)this.sync();
     }
     syncItem(item) {
@@ -49,7 +51,7 @@ class TileGlass {
     sync(){for(const item of this.items)this.syncItem(item);}
     destroy(){
         this.owner.disconnect(this.positionId);
-        for(const item of this.items){item.tile.disconnect(item.id);item.viewport.remove_effect(item.effect);item.viewport.destroy();}
+        for(const item of this.items){item.tile.disconnect(item.id);if(item.effect)item.viewport.remove_effect(item.effect);item.viewport.destroy();}
         this.items=[];
     }
 }
