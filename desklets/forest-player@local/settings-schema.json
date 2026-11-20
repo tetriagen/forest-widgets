@@ -1,53 +1,90 @@
 {
-  "font-family": {
-    "type": "combobox",
-    "default": "monocraft",
-    "description": "Шрифт",
-    "options": {
-      "Системный": "system",
-      "JetBrains Mono (установлен)": "mono",
-      "Tiny5 (нужна установка)": "tiny5",
-      "Press Start 2P (нужна установка)": "press",
-      "Monocraft (установлен)": "monocraft"
+    "appearance": {
+        "type": "combobox",
+        "default": "radial",
+        "description": "Внешний вид плеера",
+        "options": {
+            "Полукруг у края экрана": "radial",
+            "Лесная пластинка (классический)": "vinyl",
+            "Glyph Matrix — круг и управление справа": "matrix"
+        }
+    },
+    "spectrum-enabled": {
+        "type": "switch",
+        "default": true,
+        "description": "Эквалайзер системного звука (нужен parec)"
+    },
+    "font-family": {
+        "type": "combobox",
+        "default": "manrope",
+        "description": "Шрифт",
+        "options": {
+            "Системный": "system",
+            "JetBrains Mono (установлен)": "mono",
+            "Tiny5 (нужна установка)": "tiny5",
+            "Press Start 2P (нужна установка)": "press",
+            "Monocraft (установлен)": "monocraft",
+            "Manrope (установлен)": "manrope",
+            "Doto — точечный": "doto",
+            "Nothing Ndot (installed locally)": "ndot"
+        }
+    },
+    "opacity": {
+        "type": "scale",
+        "default": 55,
+        "min": 40,
+        "max": 100,
+        "step": 1,
+        "description": "Непрозрачность классической карточки, %"
+    },
+    "spin-enabled": {
+        "type": "switch",
+        "default": true,
+        "description": "Вращать пластинку в классическом режиме"
+    },
+    "spin-seconds": {
+        "type": "spinbutton",
+        "default": 18,
+        "min": 6,
+        "max": 60,
+        "step": 1,
+        "description": "Секунд на один оборот"
+    },
+    "compact": {
+        "type": "switch",
+        "default": false,
+        "description": "Компактный режим без пластинки"
+    },
+    "show-album": {
+        "type": "switch",
+        "default": false,
+        "description": "Показывать название альбома"
+    },
+    "size-percent": {
+        "type": "scale",
+        "default": 100,
+        "min": 75,
+        "max": 160,
+        "step": 5,
+        "description": "Размер виджета, %"
+    },
+    "dock-side": {
+        "type": "combobox",
+        "default": "right",
+        "description": "Край экрана для круглого плеера",
+        "options": {
+            "Слева": "left",
+            "Справа": "right"
+        }
+    },
+    "spectrum-fps": {
+        "type": "combobox",
+        "default": 30,
+        "description": "Частота эквалайзера",
+        "options": {
+            "20 FPS — экономия": 20,
+            "30 FPS — баланс": 30,
+            "60 FPS — плавно": 60
+        }
     }
-  },
-  "opacity": {
-    "type": "scale",
-    "default": 55,
-    "min": 40,
-    "max": 100,
-    "step": 1,
-    "description": "Непрозрачность карточки, %"
-  },
-  "spin-enabled": {
-    "type": "switch",
-    "default": true,
-    "description": "Вращать пластинку во время музыки"
-  },
-  "spin-seconds": {
-    "type": "spinbutton",
-    "default": 18,
-    "min": 6,
-    "max": 60,
-    "step": 1,
-    "description": "Секунд на один оборот"
-  },
-  "compact": {
-    "type": "switch",
-    "default": false,
-    "description": "Компактный режим без пластинки"
-  },
-  "show-album": {
-    "type": "switch",
-    "default": true,
-    "description": "Показывать название альбома"
-  },
-  "size-percent": {
-    "type": "scale",
-    "default": 100,
-    "min": 75,
-    "max": 160,
-    "step": 5,
-    "description": "Размер виджета, %"
-  }
 }

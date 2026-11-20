@@ -14,18 +14,37 @@ const Soup = imports.gi.Soup;
 const Slider=imports.ui.slider;
 const Settings=imports.ui.settings;
 const PopupMenu=imports.ui.popupMenu;
+const {TileGlass}=require('./tile-glass');
 const MPRIS = 'org.mpris.MediaPlayer2.Player';
 function read(path) {
     try { const [ok, bytes] = GLib.file_get_contents(path); return ok ? ByteArray.toString(bytes) : ''; }
     catch (_) { return ''; }
 }
+function dotBar(props,empty=false){
+    const bar=new St.DrawingArea(props);
+    bar.connect('repaint',()=>{
+        const cr=bar.get_context(),[w,h]=bar.get_surface_size();
+        if(empty)cr.setSourceRGBA(1,1,1,0.13);else cr.setSourceRGBA(0.83,0.87,0.93,1);
+        cr.rectangle(0,0,w,h);cr.fill();
+        cr.$dispose();
+    });
+    return bar;
+}
+function dotTrack(){
+    const track=new St.Widget({style_class:'fw-track',layout_manager:new Clutter.FixedLayout()});
+    const empty=dotBar({width:1,height:5},true);
+    track.add_child(empty);
+    track.connect('notify::allocation',()=>empty.set_size(track.width,track.height));
+    track.set_child=fill=>{track.add_child(fill);fill.set_position(0,0);};
+    return track;
+}
 class ForestResources extends Desklet.Desklet {
     constructor(metadata,id){
         super(metadata,id);
         this.dead=false;this.previous=null;this.tick=0;this.gpuText='';this.cancel=new Gio.Cancellable();
-        this.clearBackdrop();this.root=new St.BoxLayout({vertical:true,style_class:'fw-root'});
+        this.clearBackdrop();this.root=new St.BoxLayout({vertical:true,style_class:'fw-root fw-resources'});
         const grid=new St.BoxLayout({vertical:true,style_class:'fw-grid'});
-        this.values={}; this.bars={};this.tiles=[];
+        this.values={}; this.bars={};this.tiles=[];this.tileGlass=new TileGlass(this.actor);
         for (const rowKeys of [['cpu','ram'],['gpu','vram']]) {
             const row=new St.BoxLayout({style_class:'fw-row'});
             for (const key of rowKeys) {
@@ -34,9 +53,9 @@ class ForestResources extends Desklet.Desklet {
                 this.values[key]=new St.Label({text:'—',style_class:'fw-value'});
                 tile.add_child(this.values[key]);
                 tile.add_child(new St.Label({text:{cpu:'LOAD',ram:'GiB USED',gpu:'LOAD',vram:'GiB USED'}[key],style_class:'fw-unit'}));
-                const track=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
-                this.bars[key]=new St.Widget({style_class:'fw-fill',width:0,height:3,x_align:Clutter.ActorAlign.START});
-                track.set_child(this.bars[key]); tile.add_child(track); row.add_child(tile);
+                const track=dotTrack();
+                this.bars[key]=dotBar({style_class:'fw-fill',width:0,height:3,x_align:Clutter.ActorAlign.START});
+                track.set_child(this.bars[key]); tile.add_child(track); row.add_child(this.tileGlass.wrap(tile));
             }
             grid.add_child(row);
         }
@@ -44,18 +63,18 @@ class ForestResources extends Desklet.Desklet {
         this.diskTitle=new St.Label({text:'DISK · /',style_class:'fw-caption'});
         this.diskValue=new St.Label({text:'—',style_class:'fw-value'});
         this.diskDetail=new St.Label({text:'GiB FREE',style_class:'fw-unit'});
-        this.diskTrack=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
-        this.diskFill=new St.Widget({style_class:'fw-fill',width:0,height:3});
+        this.diskTrack=dotTrack();
+        this.diskFill=dotBar({style_class:'fw-fill',width:0,height:3});
         this.diskTrack.set_child(this.diskFill);
         for(const child of [this.diskTitle,this.diskValue,this.diskDetail,this.diskTrack])this.disk.add_child(child);
-        grid.add_child(this.disk);
+        grid.add_child(this.tileGlass.wrap(this.disk));
         this.root.add_child(grid);this.card=grid;
         this.setContent(this.root);this.setHeader('Forest Resources');this.setupSettings();this.applySettings();
-        this.sampleDisk();this.diskTimer=Mainloop.timeout_add_seconds(30,()=>{this.sampleDisk();return !this.dead;});
-        this.sample();this.timer=Mainloop.timeout_add_seconds(3,()=>{this.sample();return !this.dead;});
+        this.sampleDisk();this.diskTimer=Mainloop.timeout_add_seconds(120,()=>{if(this.actor.mapped)this.sampleDisk();return !this.dead;});
+        this.sample();this.timer=Mainloop.timeout_add_seconds(5,()=>{this.sample();return !this.dead;});
     }
     on_desklet_removed(){
-        this.dead=true;if(this.diskCancel)this.diskCancel.cancel();this.cancel.cancel();if(this.diskTimer)Mainloop.source_remove(this.diskTimer);if(this.timer)Mainloop.source_remove(this.timer);
+        this.dead=true;if(this.tileGlass)this.tileGlass.destroy();if(this.diskCancel)this.diskCancel.cancel();this.cancel.cancel();if(this.diskTimer)Mainloop.source_remove(this.diskTimer);if(this.timer)Mainloop.source_remove(this.timer);
         if(this.gpuTimeout)Mainloop.source_remove(this.gpuTimeout);if(this.gpuProcess)this.gpuProcess.force_exit();
         if(this.clampTimer)Mainloop.source_remove(this.clampTimer);if(this.settings)this.settings.finalize();
     }
@@ -63,6 +82,8 @@ class ForestResources extends Desklet.Desklet {
         this.settings=new Settings.DeskletSettings(this,this.metadata.uuid,this.instance_id);
         this.settings.bind('disk-path','diskPath',()=>this.sampleDisk());
         this.settings.bind('font-family','fontFamily',()=>this.applySettings());
+        this.settings.bind('glass-panels','glassPanels',()=>this.applySettings());
+        this.settings.bind('matte-panels','mattePanels',()=>this.applySettings());
         this.settings.bind('opacity','cardOpacity',()=>this.applySettings());
         this.settings.bind('size-percent','sizePercent',()=>this.applySettings());
     }
@@ -77,8 +98,11 @@ class ForestResources extends Desklet.Desklet {
         this.renderScale=scale;
     }
     glassStyle(){
+        if(!this.glassPanels)return this.mattePanels?'background-color: rgba(24,25,29,0.85); border-radius: 20px; border: 1px solid rgba(255,255,255,0.07); box-shadow: none;':'background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
         const a=(this.cardOpacity||55)/100;
-        return 'background-color: rgba(13,34,22,'+a+'); background-gradient-direction: vertical; background-gradient-start: rgba(66,96,76,'+(a*0.8)+'); background-gradient-end: rgba(7,23,14,'+a+'); border-color: rgba(189,228,201,0.3);';
+        const radius=Math.round(24*(this.sizePercent||100)/100);
+        if(this.tileGlass.Refraction)return 'border-radius: '+radius+'px; background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
+        return 'border-radius: '+radius+'px; background-color: rgba(29,31,35,'+(a*0.12)+'); background-gradient-direction: vertical; background-gradient-start: rgba(190,196,207,'+(a*0.05)+'); background-gradient-end: rgba(22,24,29,'+(a*0.10)+'); border: none; box-shadow: none;';
     }
     clampPosition(){
         if(this.dead||!this.actor.mapped)return;
@@ -97,16 +121,17 @@ class ForestResources extends Desklet.Desklet {
         this.sizeClass='forest-size-'+percent;this.root.add_style_class_name(this.sizeClass);
         this.resizeContent(scale);
         if(this.clampTimer)Mainloop.source_remove(this.clampTimer);
-        this.clampTimer=Mainloop.timeout_add(100,()=>{this.clampTimer=0;this.clampPosition();return false;});
-        const families={'system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
-        this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'";');
+        this.clampTimer=Mainloop.timeout_add(100,()=>{this.clampTimer=0;this.clampPosition();if(this.tileGlass)this.tileGlass.sync();return false;});
+        const families={'ndot':'Ndot','doto':'Doto','manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
+        this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'"; border-radius: 24px;');
         if(this.card)this.card.set_style('background-color: transparent; border: none; padding: 0;');
+        if(this.tileGlass)this.tileGlass.setEnabled(!!this.glassPanels);
         for(const tile of this.tiles)tile.set_style(this.glassStyle());
         // Match both columns including their padding, borders and the gap.
         const width=2*Math.round(98*scale)+2*Math.round(12*scale)+Math.round(10*scale)+2;
         this.diskWidth=width*(global.ui_scale||1);
         this.disk.set_style(this.glassStyle()+'width: '+width+'px; height: auto;');
-        this.diskValue.set_style('font-size: '+Math.round(18*scale)+'px;');
+        this.diskValue.set_style('font-size: '+Math.round(22*scale)+'px; letter-spacing: 1px;');
         this.diskTrack.set_style('width: '+width+'px;');
         this.updateDiskBar();
         if(this.discBox)this.discBox.visible=!this.compact;
@@ -159,7 +184,7 @@ class ForestResources extends Desklet.Desklet {
         this.values.ram.set_text(used);
         this.bars.cpu.set_width(Math.round((98 * (parseFloat(cpu) || 0)/100)*(this.renderScale||1)*(global.ui_scale||1)));
         this.bars.ram.set_width(Math.round((all && avail ? 98 * (1-(+avail[1])/(+all[1])) : 0)*(this.renderScale||1)*(global.ui_scale||1)));
-        if ((this.tick++ % 5) === 0) this.sampleGPU();
+        if ((this.tick++ % 6) === 0) this.sampleGPU();
     }
     sampleGPU() {
         // Never run nvidia-smi against a suspended GPU or an unknown power state.

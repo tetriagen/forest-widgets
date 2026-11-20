@@ -1,0 +1,12 @@
+const fs=require('fs'),assert=require('assert');
+const source=fs.readFileSync('desklets/forest-player@local/desklet.js','utf8');
+const method=source.slice(source.indexOf('    animateSpectrum('),source.indexOf('    updateAudioMonitor('));
+let tick,interval,time=0,paints=0;
+const Mainloop={timeout_add:(ms,fn)=>{interval=ms;tick=fn;return 1;}};
+const GLib={get_monotonic_time:()=>time};
+const p=Function('Mainloop','GLib','return ({'+method+'})')(Mainloop,GLib);
+Object.assign(p,{actor:{mapped:true},appearance:'radial',spectrumEnabled:true,spectrumFps:30,canvas:{invalidate:()=>paints++},monitor:{proc:{}}});
+p.animateSpectrum(new Float64Array(48));assert.equal(interval,33);time+=33000;assert.equal(tick(),false);assert.equal(paints,0);assert.equal(p.spectrumFrameTimer,0);
+p.animateSpectrum(new Float64Array(48).fill(.8));time+=33000;assert.equal(tick(),true);assert.equal(paints,1);
+p.covered=true;time+=33000;assert.equal(tick(),false);assert.equal(p.spectrumFrameTimer,0);assert(p.spectrumLevels.every(x=>x===0));
+console.log('PASS: stable silence stops renderer without redraw; changes render at 30 FPS; covered player stops');
