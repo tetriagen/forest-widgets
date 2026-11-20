@@ -81,7 +81,9 @@ class ForestResources extends Desklet.Desklet {
     glassStyle(){
         if(!this.glassPanels)return 'background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
         const a=(this.cardOpacity||55)/100;
-        return 'background-color: rgba(29,31,35,'+(a*0.30)+'); background-gradient-direction: vertical; background-gradient-start: rgba(190,196,207,'+(a*0.12)+'); background-gradient-end: rgba(22,24,29,'+(a*0.22)+'); border: none; box-shadow: none;';
+        const radius=Math.round(24*(this.sizePercent||100)/100);
+        if(this.tileGlass.Refraction)return 'border-radius: '+radius+'px; background-color: transparent; background-gradient-direction: none; border: none; box-shadow: none;';
+        return 'border-radius: '+radius+'px; background-color: rgba(29,31,35,'+(a*0.12)+'); background-gradient-direction: vertical; background-gradient-start: rgba(190,196,207,'+(a*0.05)+'); background-gradient-end: rgba(22,24,29,'+(a*0.10)+'); border: none; box-shadow: none;';
     }
     clampPosition(){
         if(this.dead||!this.actor.mapped)return;
