@@ -23,8 +23,8 @@ class TileGlass {
         const viewport=new Clutter.Actor({width:1,height:1,clip_to_allocation:true,reactive:false,visible:false});
         const wallpaper=new Clutter.Clone({source:this.background,reactive:false});
         viewport.add_child(wallpaper);
-        const effect=new this.Refraction({strength:0.22,blur_radius:6,edge_size:28,corner_radius:24,
-            rim_width:1.0,gloss:0.12,rgb_fringing:0,tint:0.04,tint_color:[0.8,0.83,0.88,1],shadow:0});
+        const effect=new this.Refraction({strength:0.78,blur_radius:18,edge_size:24,corner_radius:24,
+            rim_width:2.2,gloss:0.85,rgb_fringing:0.015,tint:0.08,tint_color:[0.92,0.95,1,1],shadow:0.08,backdrop_zoom:1.04});
         viewport.add_effect_with_name('forest-tile-glass',effect);
         wrapper.add_child(viewport);wrapper.add_child(tile);
         const item={tile,wrapper,viewport,wallpaper,effect};
