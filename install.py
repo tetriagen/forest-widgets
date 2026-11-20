@@ -22,7 +22,7 @@ def main():
     actions.add_argument('--check', action='store_true', help='Check dependencies without changing anything')
     actions.add_argument('--disable', action='store_true', help='Disable both widgets; keep files and settings')
     actions.add_argument('--restore', type=Path, metavar='BACKUP', help='Restore a backup folder printed during installation')
-    parser.add_argument('--no-font', action='store_true', help='Skip installing the bundled Manrope and Monocraft fonts')
+    parser.add_argument('--no-font', action='store_true', help='Skip installing the bundled Doto, Manrope and Monocraft fonts')
     args = parser.parse_args()
     if 'cinnamon' not in os.environ.get('XDG_CURRENT_DESKTOP', '').lower():
         raise RuntimeError('Run this command in a terminal inside your Cinnamon desktop session.')
@@ -101,7 +101,7 @@ def main():
     if not args.no_font:
         fonts = HOME / '.local/share/fonts'
         fonts.mkdir(parents=True, exist_ok=True)
-        for name in ('Monocraft', 'Manrope'):
+        for name in ('Monocraft', 'Manrope', 'Doto'):
             target_font = fonts / (name + '-Forest.ttf')
             if not target_font.exists():
                 shutil.copyfile(ROOT / ('fonts/' + name + '.ttf'), target_font)

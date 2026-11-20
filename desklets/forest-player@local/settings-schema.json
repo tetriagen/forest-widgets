@@ -15,7 +15,7 @@
   },
   "font-family": {
     "type": "combobox",
-    "default": "manrope",
+    "default": "doto",
     "description": "Шрифт",
     "options": {
       "Системный": "system",
@@ -23,7 +23,8 @@
       "Tiny5 (нужна установка)": "tiny5",
       "Press Start 2P (нужна установка)": "press",
       "Monocraft (установлен)": "monocraft",
-      "Manrope (установлен)": "manrope"
+      "Manrope (установлен)": "manrope",
+      "Doto — точечный": "doto"
     }
   },
   "opacity": {

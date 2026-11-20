@@ -20,6 +20,16 @@ function read(path) {
     try { const [ok, bytes] = GLib.file_get_contents(path); return ok ? ByteArray.toString(bytes) : ''; }
     catch (_) { return ''; }
 }
+function dotBar(props){
+    const bar=new St.DrawingArea(props);
+    bar.connect('repaint',()=>{
+        const cr=bar.get_context(),[w,h]=bar.get_surface_size();
+        cr.setSourceRGBA(0.94,0.17,0.2,1);
+        for(let x=2;x<w;x+=6){cr.arc(x,h/2,Math.min(1.7,h/2),0,Math.PI*2);cr.fill();}
+        cr.$dispose();
+    });
+    return bar;
+}
 class ForestResources extends Desklet.Desklet {
     constructor(metadata,id){
         super(metadata,id);
@@ -36,7 +46,7 @@ class ForestResources extends Desklet.Desklet {
                 tile.add_child(this.values[key]);
                 tile.add_child(new St.Label({text:{cpu:'LOAD',ram:'GiB USED',gpu:'LOAD',vram:'GiB USED'}[key],style_class:'fw-unit'}));
                 const track=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
-                this.bars[key]=new St.Widget({style_class:'fw-fill',width:0,height:3,x_align:Clutter.ActorAlign.START});
+                this.bars[key]=dotBar({style_class:'fw-fill',width:0,height:3,x_align:Clutter.ActorAlign.START});
                 track.set_child(this.bars[key]); tile.add_child(track); row.add_child(this.tileGlass.wrap(tile));
             }
             grid.add_child(row);
@@ -46,7 +56,7 @@ class ForestResources extends Desklet.Desklet {
         this.diskValue=new St.Label({text:'—',style_class:'fw-value'});
         this.diskDetail=new St.Label({text:'GiB FREE',style_class:'fw-unit'});
         this.diskTrack=new St.Bin({style_class:'fw-track',x_align:St.Align.START});
-        this.diskFill=new St.Widget({style_class:'fw-fill',width:0,height:3});
+        this.diskFill=dotBar({style_class:'fw-fill',width:0,height:3});
         this.diskTrack.set_child(this.diskFill);
         for(const child of [this.diskTitle,this.diskValue,this.diskDetail,this.diskTrack])this.disk.add_child(child);
         grid.add_child(this.tileGlass.wrap(this.disk));
@@ -103,7 +113,7 @@ class ForestResources extends Desklet.Desklet {
         this.resizeContent(scale);
         if(this.clampTimer)Mainloop.source_remove(this.clampTimer);
         this.clampTimer=Mainloop.timeout_add(100,()=>{this.clampTimer=0;this.clampPosition();if(this.tileGlass)this.tileGlass.sync();return false;});
-        const families={'manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
+        const families={'doto':'Doto','manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
         this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'"; border-radius: 24px;');
         if(this.card)this.card.set_style('background-color: transparent; border: none; padding: 0;');
         if(this.tileGlass)this.tileGlass.setEnabled(!!this.glassPanels);

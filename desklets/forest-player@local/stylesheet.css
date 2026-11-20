@@ -550,3 +550,13 @@
 
 .fw-radial .fw-title, .fw-radial .fw-artist, .fw-radial .fw-album, .fw-radial .fw-time, .fw-radial .fw-source { text-shadow: 0 2px 4px rgba(0,0,0,0.85); }
 .fw-radial .fw-play { border: 1px solid rgba(255,255,255,0.25); }
+
+/* Nothing-inspired dot typography and restrained red accents. */
+.fw-root.fw-radial .fw-play { background-color: #ef2b33; color: #ffffff; border: none; box-shadow: none; }
+.fw-root.fw-radial .fw-active { color: #ef2b33; background-color: transparent; }
+.fw-root.fw-radial .fw-source { color: #ef2b33; font-size: 11px; }
+.fw-root.fw-resources .fw-track { background-color: transparent; height: 5px; }
+.fw-root.fw-resources .fw-fill { background-color: transparent; height: 5px; }
+.fw-root.fw-resources .fw-caption { color: #e8e8e8; font-weight: bold; }
+.fw-root.fw-resources .fw-value { color: #ffffff; font-weight: bold; }
+.fw-root.fw-resources .fw-unit { color: #a5a5a5; }

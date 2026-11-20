@@ -195,7 +195,7 @@ class ForestPlayer extends Desklet.Desklet {
         this.progress.actor.visible=this.appearance!=='radial'||this.compact;
         this.resizeContent(scale);
         this.scheduleClamp();
-        const families={'manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
+        const families={'doto':'Doto','manrope':'Manrope','system':'Sans','mono':'JetBrainsMono Nerd Font','monocraft':'Monocraft','tiny5':'Tiny5','press':'Press Start 2P'};
         this.root.set_style('font-family: "'+(families[this.fontFamily]||'Sans')+'";');
         if(this.card)this.card.set_style(this.glassStyle());
         if(this.discBox)this.discBox.visible=!this.compact;
@@ -235,7 +235,7 @@ class ForestPlayer extends Desklet.Desklet {
                 actor.set_pivot_point(right?1:0,0.5);
                 actor.set_style('width: '+width*scale+'px; font-size: '+font*scale+'px; font-weight: '+weight+'; text-align: '+(right?'right':'left')+';');
             };
-            label(this.title,-145,158,220,30,17,'bold',12);
+            label(this.title,-145,158,220,32,20,'bold',8);
             label(this.artist,-163,164,185,24,12,'normal',6);
             label(this.album,-179,166,180,20,10,'normal',0);
             this.album.visible=this.showAlbum;
@@ -431,12 +431,11 @@ class ForestPlayer extends Desklet.Desklet {
             if(level<=0.001)continue;
             const angle=i/96*Math.PI*2-Math.PI/2;
             const inner=r+17,outer=inner+level*45,alpha=Math.min(1,level*10);
-            cr.setLineWidth(5);cr.setSourceRGBA(0.9,0.94,1,alpha*(0.08+level*0.12));
-            cr.moveTo(c+Math.cos(angle)*inner,c+Math.sin(angle)*inner);
-            cr.lineTo(c+Math.cos(angle)*outer,c+Math.sin(angle)*outer);cr.stroke();
-            cr.setLineWidth(1.8);cr.setSourceRGBA(0.96,0.97,1,alpha*(0.68+level*0.32));
-            cr.moveTo(c+Math.cos(angle)*inner,c+Math.sin(angle)*inner);
-            cr.lineTo(c+Math.cos(angle)*outer,c+Math.sin(angle)*outer);cr.stroke();
+            for(let radius=inner;radius<outer;radius+=5){
+                const fade=Math.min(1,(outer-radius)/5);
+                cr.setSourceRGBA(0.96,0.97,1,alpha*fade);
+                cr.arc(c+Math.cos(angle)*radius,c+Math.sin(angle)*radius,1.35,0,Math.PI*2);cr.fill();
+            }
         }
         cr.setSourceRGBA(0.055,0.06,0.065,1);cr.arc(c,c,r,0,Math.PI*2);cr.fill();
         if(this.pixbuf){
@@ -458,9 +457,9 @@ class ForestPlayer extends Desklet.Desklet {
         const fraction=this.arcDragging?this.arcFraction:(this.progress?this.progress._value:0);
         const arc=(end)=>{if(sign<0)cr.arcNegative(c,c,98,start,end);else cr.arc(c,c,98,start,end);};
         cr.setLineWidth(2);cr.setSourceRGBA(1,1,1,0.18);arc(start+sign*Math.PI);cr.stroke();
-        if(fraction>0){cr.setSourceRGBA(1,1,1,0.95);arc(start+sign*Math.PI*fraction);cr.stroke();}
+        if(fraction>0){cr.setSourceRGBA(0.94,0.17,0.2,0.95);arc(start+sign*Math.PI*fraction);cr.stroke();}
         const head=start+sign*Math.PI*fraction;
-        cr.setSourceRGBA(1,1,1,1);cr.arc(c+Math.cos(head)*98,c+Math.sin(head)*98,3,0,Math.PI*2);cr.fill();
+        cr.setSourceRGBA(0.94,0.17,0.2,1);cr.arc(c+Math.cos(head)*98,c+Math.sin(head)*98,3,0,Math.PI*2);cr.fill();
         cr.$dispose();return true;
     }
     drawRecord(cr,w,h) {

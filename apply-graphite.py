@@ -51,8 +51,8 @@ def main():
     def save(uuid):
         paths[uuid].write_text(json.dumps(data[uuid], ensure_ascii=False, indent=2))
     for uuid in widget_ids:
-        data[uuid]['font-family']['value'] = 'manrope'
-    data[widget_ids[1]]['glass-panels']['value'] = True
+        data[uuid]['font-family']['value'] = 'doto'
+    data[widget_ids[1]]['glass-panels']['value'] = False
     player = data[widget_ids[0]]
     for key, value in {'appearance': 'radial', 'dock-side': 'right', 'show-album': False, 'compact': False, 'size-percent': 100}.items():
         player[key]['value'] = value
@@ -106,7 +106,7 @@ def main():
         background.set_string('picture-uri', target.as_uri())
         background.set_string('picture-options', 'zoom')
     Gio.Settings.sync()
-    print('Applied: right-edge monochrome player and soft individual glass resource tiles.')
+    print('Applied: right-edge monochrome player and dot resource indicators with red accents.')
     print('Settings backup: ' + str(backup))
 
 
