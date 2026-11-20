@@ -3,7 +3,7 @@ const St=imports.gi.St;
 const GLib=imports.gi.GLib;
 const Mainloop=imports.mainloop;
 let area=null,menu=null,original=null,timer=0,retry=0,destroyId=0,frames=[],active=false;
-const SIZE=24,COUNT=360,FPS=15;
+const SIZE=24,COUNT=720,FPS=30;
 function makeFrames(){
     const vertices=[];for(let z of [-1,1])for(let y of [-1,1])for(let x of [-1,1])vertices.push([x,y,z]);
     const edges=[];for(let i=0;i<8;i++)for(let j=i+1;j<8;j++)if(vertices[i].filter((v,k)=>v!==vertices[j][k]).length===1)edges.push([i,j]);
